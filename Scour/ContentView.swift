@@ -44,7 +44,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        Text("Hello, World!")
+        Text("Hello, /Users/thrashr888/hashicorp/atlas!")
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
