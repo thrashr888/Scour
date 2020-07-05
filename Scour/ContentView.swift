@@ -9,43 +9,55 @@
 import SwiftUI
 import SwiftGit2
 
-
-
-func loadRepo(path: String = "") {
-    let url: URL = URL(fileURLWithPath: path)
-    let result = Repository.at(url)
+struct GitView: View {
+    var git: Gitservice
+    var currentCommit: Commit?
+    var currentBlob: Blob?
     
-    switch result {
-    case let .success(repo):
-        let latestCommit = repo
-            .HEAD()
-            .flatMap {
-                repo.commit($0.oid)
-            }
-
-        switch latestCommit {
-        case let .success(commit):
-            print("Latest Commit: \(commit.message) by \(commit.author.name)")
-
-        case let .failure(error):
-            print("Could not get commit: \(error)")
-        }
-
-    case let .failure(error):
-        print("Could not open repository: \(error)")
-    }
-}
-
-
-struct ContentView: View {
-    init(){
-        loadRepo(path: "/Users/thrashr888/hashicorp/atlas")
-//        loadRepo(url: "https://github.com/SwiftGit2/SwiftGit2.git")
+    init(git: Gitservice) {
+        self.git = git
+        currentCommit = git.getLatestCommit()
+        currentBlob = git.getBlob()
     }
     
     var body: some View {
-        Text("Hello, /Users/thrashr888/hashicorp/atlas!")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        VStack {
+            if currentCommit != nil {
+                Text("Latest Commit: \(currentCommit!.message) by \(currentCommit!.author.name)")
+            }
+            
+            if currentBlob != nil {
+                Text("Latest Blob: \(currentBlob!.data)")
+            }
+            
+            if git.lastError != nil {
+                Text("Error: \(git.lastError!.localizedDescription)")
+            }
+        }
+    }
+}
+
+struct ContentView: View {
+    @State var currentUrl: String = "/Users/thrashr888/workspace/scrubr"
+    //https://github.com/SwiftGit2/SwiftGit2.git
+    var git: Gitservice = Gitservice()
+    
+    init(){
+        git.boot(path: currentUrl)
+    }
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Text("Git Repo")
+                    .font(.title)
+                    .fontWeight(.heavy)
+                    .foregroundColor(.yellow)
+                Text("\(currentUrl)").bold()
+            }.frame(alignment: .leading)
+            
+            GitView(git: self.git)
+        }.frame(width: 800, height: 600, alignment: .leading)
     }
 }
 
