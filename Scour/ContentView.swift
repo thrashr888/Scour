@@ -9,6 +9,34 @@
 import SwiftUI
 import SwiftGit2
 
+struct TitleView: View {
+    var currentUrl: String
+    var body: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text("Git Repo")
+                .font(.title)
+                .fontWeight(.heavy)
+                .foregroundColor(.yellow)
+            Spacer()
+            Text("\(currentUrl)").bold()
+        }.frame(alignment: .leading)
+    }
+}
+
+struct ErrorView: View {
+    var error: Error
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Error").font(.subheadline).bold()
+            Text(" \(error.localizedDescription)").italic()
+        }
+        .padding(.all)
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .topLeading)
+        .background(/*@START_MENU_TOKEN@*/Color.red/*@END_MENU_TOKEN@*/.opacity(0.3))
+        .border(/*@START_MENU_TOKEN@*/Color.red/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+    }
+}
+
 struct GitView: View {
     var git: Gitservice
     var currentCommit: Commit?
@@ -24,11 +52,12 @@ struct GitView: View {
     var body: some View {
         VStack {
             if git.error() != nil {
-                Text("Error: \(git.error()!.localizedDescription)").italic()
+                ErrorView(error: git.error()!)
             }
             
             if currentCommit != nil {
-                Text("Latest Commit: \(currentCommit!.message) by \(currentCommit!.author.name)")
+                Text("Latest Commit: \(currentCommit!.oid.description)\n \(currentCommit!.message)\n by \(currentCommit!.author.name)")
+                    .padding(.top)
             }
             
             if currentBlob != nil {
@@ -48,19 +77,15 @@ struct ContentView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("Git Repo")
-                    .font(.title)
-                    .fontWeight(.heavy)
-                    .foregroundColor(.yellow)
-                VStack {
-                  Text("\(currentUrl)").bold()
-                }.frame(maxHeight: 23, alignment: .bottom)
-            }.frame(alignment: .leading)
-            
-            GitView(git: self.git)
-        }.frame(width: 800, height: 600, alignment: .leading)
+        HStack {
+            VStack {
+                TitleView(currentUrl: currentUrl)
+                    .padding([.top, .leading, .trailing])
+                Divider()
+                GitView(git: self.git)
+            }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+        }.frame(width: 800, height: 600)
     }
 }
 

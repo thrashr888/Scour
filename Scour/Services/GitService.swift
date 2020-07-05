@@ -9,6 +9,17 @@
 import Foundation
 import SwiftGit2
 
+class Commitservice : ObservableObject {
+    @Published var lastError: Error?
+    @Published var lastCommit: Error?
+    
+    var oid: OID
+    
+    init(oid: OID) {
+        self.oid = oid
+    }
+}
+
 class Reposervice : ObservableObject {
     @Published var lastError: Error?
     @Published var lastCommit: Error?
@@ -20,6 +31,7 @@ class Reposervice : ObservableObject {
     init(url: URL, repo: Repository) {
         self.url = url
         self.repo = repo
+        let _ = self.head()
     }
     
     func head() -> OID? {
@@ -28,6 +40,7 @@ class Reposervice : ObservableObject {
         }
         switch result {
         case let .success(latestOID):
+            print(latestOID)
             self.currentOID = latestOID
             return latestOID
         case let .failure(error):
