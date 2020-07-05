@@ -9,50 +9,21 @@
 import Foundation
 import SwiftGit2
 
-#if DEBUG
-//    let API_BASE_URL = "https://travelwithluna.com"
-    let API_BASE_URL = "http://127.0.0.1:80"
-#else
-    let API_BASE_URL = "http://127.0.0.1:80"
-#endif
-
-struct APIRequest: Encodable {}
-struct APIResponse: Decodable {
-    var error: String?
-    var statusCode: Int?
-}
-
-class Gitservice : ObservableObject {
+class Reposervice : ObservableObject {
     @Published var lastError: Error?
     @Published var lastCommit: Error?
     
-    var url: URL?
-    var repo: Repository? = nil
+    var url: URL
+    var repo: Repository
     var currentOID: OID? = nil
     
-    func boot(path: String) {
-        self.url = self.setUrl(path: path)
-        self.repo = self.loadRepo()
+    init(url: URL, repo: Repository) {
+        self.url = url
+        self.repo = repo
     }
     
-    func setUrl(path: String) -> URL {
-        return URL(fileURLWithPath: path)
-    }
-    
-    func loadRepo() -> Repository? {
-        let res = Repository.at(url!)
-        switch res {
-        case let .success(obj):
-            return obj
-        case let .failure(error):
-            self.lastError = error
-            return nil
-        }
-    }
-    
-    func getHead() -> OID? {
-        guard repo != nil else { return nil }
-        let result = repo!.HEAD().map {
+    func head() -> OID? {
+        let result = repo.HEAD().map {
             $0.oid
         }
         switch result {
@@ -65,10 +36,8 @@ class Gitservice : ObservableObject {
         }
     }
     
-    func getTree() -> Tree? {
-        guard repo != nil else { return nil }
-
-        let res = repo!.tree(self.currentOID!)
+    func tree() -> Tree? {
+        let res = repo.tree(self.currentOID!)
         
         switch res {
         case let .success(obj):
@@ -79,11 +48,9 @@ class Gitservice : ObservableObject {
         }
     }
     
-    func getCommits() -> Commit? {
-        guard repo != nil else { return nil }
-
-        let res = repo!.HEAD().flatMap {
-            repo!.commit($0.oid)
+    func commits() -> Commit? {
+        let res = repo.HEAD().flatMap {
+            repo.commit($0.oid)
         }
         
         switch res {
@@ -95,11 +62,9 @@ class Gitservice : ObservableObject {
         }
     }
     
-    func getLatestCommit() -> Commit? {
-        guard repo != nil else { return nil }
-
-        let res = repo!.HEAD().flatMap {
-            repo!.commit($0.oid)
+    func latestCommit() -> Commit? {
+        let res = repo.HEAD().flatMap {
+            repo.commit($0.oid)
         }
         
         switch res {
@@ -111,11 +76,11 @@ class Gitservice : ObservableObject {
         }
     }
     
-    func getBlob() -> Blob? {
-        guard repo != nil else { return nil }
+    func blob() -> Blob? {
+//        return repo!.blob(self.currentOID!)
 
-        let res = repo!.HEAD().flatMap {
-            repo!.blob($0.oid)
+        let res = repo.HEAD().flatMap {
+            repo.blob($0.oid)
         }
         
         switch res {
@@ -125,6 +90,36 @@ class Gitservice : ObservableObject {
             self.lastError = error
             return nil
         }
+    }
+}
+
+class Gitservice : ObservableObject {
+    @Published var repo: Reposervice?
+    @Published var lastError: Error?
+    
+    init(_ path: String) {
+        loadRepo(path)
+    }
+    
+    func loadRepo(_ path: String) {
+        let url = URL(fileURLWithPath: path)
+        let result = Repository.at(url)
+        
+        switch result {
+        case let .success(repo):
+            self.repo = Reposervice(url: url, repo: repo)
+        case let .failure(error):
+            self.lastError = error
+        }
+    }
+    
+    func error() -> Error? {
+        if (self.lastError != nil) {
+            return self.lastError
+        } else if ((self.repo?.lastError) != nil) {
+            return self.repo?.lastError
+        }
+        return nil
     }
 }
 

@@ -16,12 +16,17 @@ struct GitView: View {
     
     init(git: Gitservice) {
         self.git = git
-        currentCommit = git.getLatestCommit()
-        currentBlob = git.getBlob()
+        guard let repo = git.repo else { return }
+        currentCommit = repo.latestCommit()
+        currentBlob = repo.blob()
     }
     
     var body: some View {
         VStack {
+            if git.error() != nil {
+                Text("Error: \(git.error()!.localizedDescription)").italic()
+            }
+            
             if currentCommit != nil {
                 Text("Latest Commit: \(currentCommit!.message) by \(currentCommit!.author.name)")
             }
@@ -29,21 +34,17 @@ struct GitView: View {
             if currentBlob != nil {
                 Text("Latest Blob: \(currentBlob!.data)")
             }
-            
-            if git.lastError != nil {
-                Text("Error: \(git.lastError!.localizedDescription)")
-            }
         }
     }
 }
 
 struct ContentView: View {
-    @State var currentUrl: String = "/Users/thrashr888/workspace/scrubr"
+    @State var currentUrl: String = "/Users/thrashr888/workspace/Scour"
     //https://github.com/SwiftGit2/SwiftGit2.git
-    var git: Gitservice = Gitservice()
+    var git: Gitservice
     
     init(){
-        git.boot(path: currentUrl)
+        git = Gitservice("/Users/thrashr888/workspace/Scour")
     }
     
     var body: some View {
@@ -53,7 +54,9 @@ struct ContentView: View {
                     .font(.title)
                     .fontWeight(.heavy)
                     .foregroundColor(.yellow)
-                Text("\(currentUrl)").bold()
+                VStack {
+                  Text("\(currentUrl)").bold()
+                }.frame(maxHeight: 23, alignment: .bottom)
             }.frame(alignment: .leading)
             
             GitView(git: self.git)
