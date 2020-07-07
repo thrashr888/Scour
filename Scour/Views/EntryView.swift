@@ -22,8 +22,14 @@ var filemodesByFlag = [
 struct EntryView: View {
     var repo: Repository
     var entry: Tree.Entry
-    var blob: Blob?
     var error: Error?
+    
+    var parent: Tree.Entry?
+    var blob: Blob?
+    var tree: Tree?
+    
+    @State var showContent = false
+    var name: String
     
     var mode: String
     var isUnreadable = false
@@ -33,11 +39,17 @@ struct EntryView: View {
     var isLink = false
     var isCommit = false
     
-    init(repo: Repository, entry: Tree.Entry) {
+    init(repo: Repository, entry: Tree.Entry, parent: Tree.Entry? = nil) {
         self.repo = repo
         self.entry = entry
+        self.parent = parent
         
         self.mode = filemodesByFlag[entry.attributes]!
+        
+        self.name = entry.name
+        if parent != nil {
+            self.name = "\(parent!.name)/\(entry.name)"
+        }
         
         switch entry.attributes {
         case Int32(GIT_FILEMODE_UNREADABLE.rawValue):
@@ -56,25 +68,51 @@ struct EntryView: View {
             return
         }
 
-        if !isBlob { return }
-
-        let oid = entry.object.oid
-        switch repo.blob(oid) {
-        case let .success(obj):
-            self.blob = obj
-        case let .failure(error):
-            self.error = error
+        if isBlob {
+            let oid = entry.object.oid
+            switch repo.blob(oid) {
+            case let .success(obj):
+                self.blob = obj
+            case let .failure(error):
+                self.error = error
+            }
+        }
+        
+        if isTree {
+            let oid = entry.object.oid
+            switch repo.tree(oid) {
+            case let .success(obj):
+                self.tree = obj
+            case let .failure(error):
+                self.error = error
+            }
         }
     }
 
     var body: some View {
-        VStack {
-            Text("-  \(entry.name) (\(mode))")
+        VStack(alignment: .leading) {
+            Button(action: {
+                self.showContent = !self.showContent
+            }) {
+                if isBlob || isTree {
+                    if self.showContent {
+                        Text("+")
+                    } else {
+                        Text("-")
+                    }
+                }
+                Text("\(self.name) (\(mode))")
+            }
+            
             if self.error != nil {
                 ErrorView(error: self.error!)
             }
-            if self.blob != nil {
+            
+            if self.blob != nil && self.showContent {
                 BlobView(blob: blob!)
+            }
+            if self.tree != nil && self.showContent {
+                TreeView(repo: repo, tree: tree!, parent: entry)
             }
         }
     }

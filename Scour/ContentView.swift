@@ -15,9 +15,8 @@ struct RepoWrapperView: View {
     
     init(_ path: String) {
         let url = URL(fileURLWithPath: path)
-        let result = Repository.at(url)
 
-        switch result {
+        switch Repository.at(url) {
         case let .success(repo):
             self.repo = repo
         case let .failure(error):
@@ -40,32 +39,15 @@ struct RepoWrapperView: View {
 struct ContentView: View {
     @State var currentUrl: String = "/Users/thrashr888/workspace/Scour"
     // https://github.com/SwiftGit2/SwiftGit2.git
-    var git: Gitservice
-    
-    @State var emailAddress: String = ""
-
-    init() {
-        git = Gitservice("/Users/thrashr888/workspace/Scour")
-    }
 
     var body: some View {
         HStack {
             VStack {
-                TitleView()
-                    .padding([.top, .leading, .trailing])
-
                 HStack {
                     TextField("Path", text: self.$currentUrl)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-
-                    Button(action: {
-                        print(self.currentUrl)
-                        self.git.loadRepo(self.currentUrl)
-                    }) {
-                        Text("Load repo")
-                    }
                 }
-                .padding(.horizontal)
+                .padding([.top, .leading, .trailing])
                 
                 Divider()
                 RepoWrapperView(self.currentUrl)

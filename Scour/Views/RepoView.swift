@@ -13,13 +13,12 @@ struct RepoView: View {
     var error: Error?
     var repo: Repository
     var branches: [Branch]?
+    @State var currentBranch = 0
     
     init(_ repo: Repository) {
         self.repo = repo
         
-        let res = repo.localBranches()
-
-        switch res {
+        switch repo.localBranches() {
         case let .success(obj):
             self.branches = obj
         case let .failure(error):
@@ -33,10 +32,14 @@ struct RepoView: View {
                 ErrorView(error: self.error!)
             }
             if branches != nil {
-                Text("Branches").bold()
-                List(branches!, id: \.hashValue) { branch in
-                    BranchView(repo: self.repo, branch: branch)
+                Picker("Branch", selection: $currentBranch) {
+                    ForEach(branches!.indices) { i in
+                        Text("\(self.branches![i].name)").tag(i)
+                    }
                 }
+                .padding(.horizontal).padding([.bottom], 2)
+
+                BranchView(repo: self.repo, branch: branches![self.currentBranch])
             }
         }
     }

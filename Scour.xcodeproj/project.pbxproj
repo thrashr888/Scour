@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8A52BCB224B0FE8A00F3AAAD /* GitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCB124B0FE8A00F3AAAD /* GitService.swift */; };
 		8A52BCB524B2AE2300F3AAAD /* RepoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCB424B2AE2300F3AAAD /* RepoView.swift */; };
 		8A52BCB924B2B9C900F3AAAD /* BranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCB824B2B9C900F3AAAD /* BranchView.swift */; };
 		8A52BCC424B2F4EB00F3AAAD /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */; };
@@ -99,7 +98,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8A52BCB124B0FE8A00F3AAAD /* GitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitService.swift; sourceTree = "<group>"; };
 		8A52BCB424B2AE2300F3AAAD /* RepoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoView.swift; sourceTree = "<group>"; };
 		8A52BCB824B2B9C900F3AAAD /* BranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchView.swift; sourceTree = "<group>"; };
 		8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -132,14 +130,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8A52BCA724B0FE5C00F3AAAD /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				8A52BCB124B0FE8A00F3AAAD /* GitService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		8A52BCB324B2ADE500F3AAAD /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,7 +191,6 @@
 				8AD972992496A895000A28BA /* AppDelegate.swift */,
 				8AD9729B2496A895000A28BA /* ContentView.swift */,
 				8A52BCB324B2ADE500F3AAAD /* Views */,
-				8A52BCA724B0FE5C00F3AAAD /* Services */,
 				8AD972A02496A897000A28BA /* Assets.xcassets */,
 				8AD972A52496A897000A28BA /* Main.storyboard */,
 				8AD972A82496A897000A28BA /* Info.plist */,
@@ -359,7 +348,6 @@
 			files = (
 				8A52BCCA24B2FCE600F3AAAD /* TreeView.swift in Sources */,
 				8A52BCB924B2B9C900F3AAAD /* BranchView.swift in Sources */,
-				8A52BCB224B0FE8A00F3AAAD /* GitService.swift in Sources */,
 				8A52BCCE24B3036A00F3AAAD /* BlobView.swift in Sources */,
 				8AD9729C2496A895000A28BA /* ContentView.swift in Sources */,
 				8AD9729F2496A895000A28BA /* Scour.xcdatamodeld in Sources */,

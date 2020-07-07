@@ -39,7 +39,6 @@ struct BranchView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("- \(branch.name)")
             if error != nil {
                 ErrorView(error: error!)
             }

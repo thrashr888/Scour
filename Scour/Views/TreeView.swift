@@ -12,12 +12,13 @@ import SwiftGit2
 struct TreeView: View {
     var repo: Repository
     var tree: Tree
+    var parent: Tree.Entry?
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Tree: \(tree.oid.description)")
+//            Text("Tree: \(tree.oid.description)")
             ForEach(tree.entries.keys.sorted(), id: \.self) { key in
-                EntryView(repo: self.repo, entry: self.tree.entries[key]!)
+                EntryView(repo: self.repo, entry: self.tree.entries[key]!, parent: self.parent)
             }
         }
     }
