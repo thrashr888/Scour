@@ -23,7 +23,7 @@ struct EntryView: View {
     var repo: Repository
     var entry: Tree.Entry
     var error: Error?
-    
+        
     var parent: Tree.Entry?
     var blob: Blob?
     var tree: Tree?
@@ -39,11 +39,12 @@ struct EntryView: View {
     var isLink = false
     var isCommit = false
     
-    init(repo: Repository, entry: Tree.Entry, parent: Tree.Entry? = nil) {
+    init(repo: Repository, entry: Tree.Entry, parent: Tree.Entry? = nil, showContent: Bool = false) {
         self.repo = repo
         self.entry = entry
         self.parent = parent
-        
+        _showContent = State(initialValue: showContent)
+                        
         self.mode = filemodesByFlag[entry.attributes]!
         
         self.name = entry.name
@@ -65,7 +66,7 @@ struct EntryView: View {
         case Int32(GIT_FILEMODE_COMMIT.rawValue):
             isCommit = true
         default:
-            return
+            break
         }
 
         if isBlob {
@@ -88,11 +89,15 @@ struct EntryView: View {
             }
         }
     }
-
+    
+//    @State private var pick: Tree.Entry?
+    @State private var pick: PresentableEntry?
+    
     var body: some View {
         VStack(alignment: .leading) {
             Button(action: {
-                self.showContent = !self.showContent
+                self.pick = PresentableEntry(entry: self.entry, blob: self.blob)
+                print("picked \(self.entry.name)")
             }) {
                 if isBlob || isTree {
                     if self.showContent {
@@ -102,7 +107,7 @@ struct EntryView: View {
                     }
                 }
                 Text("\(self.name) (\(mode))")
-            }
+            }.preference(key: CurrentEntryPreferenceKey.self, value: pick)
             
             if self.error != nil {
                 ErrorView(error: self.error!)

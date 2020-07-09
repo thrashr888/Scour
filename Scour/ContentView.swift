@@ -9,30 +9,20 @@
 import SwiftUI
 import SwiftGit2
 
-struct RepoWrapperView: View {
-    var repo: Repository?
-    var error: Error?
+struct PresentableEntry: Equatable, Identifiable {
+    let id = UUID()
+    let entry: Tree.Entry
+    let blob: Blob?
     
-    init(_ path: String) {
-        let url = URL(fileURLWithPath: path)
-
-        switch Repository.at(url) {
-        case let .success(repo):
-            self.repo = repo
-        case let .failure(error):
-            self.error = error
-        }
+    static func == (lhs: PresentableEntry, rhs: PresentableEntry) -> Bool {
+        lhs.id == rhs.id
     }
-    
-    var body: some View {
-        VStack {
-            if self.repo != nil {
-                RepoView(self.repo!)
-            }
-            if self.error != nil {
-                ErrorView(error: self.error!)
-            }
-        }
+}
+
+struct CurrentEntryPreferenceKey: PreferenceKey {
+    static var defaultValue: PresentableEntry?
+    static func reduce(value: inout PresentableEntry?, nextValue: () -> PresentableEntry?) {
+        value = nextValue()
     }
 }
 
@@ -50,7 +40,8 @@ struct ContentView: View {
                 .padding([.top, .leading, .trailing])
                 
                 Divider()
-                RepoWrapperView(self.currentUrl)
+
+                GitView(self.currentUrl)
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
         }.frame(width: 800, height: 600)

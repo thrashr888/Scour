@@ -8,13 +8,15 @@
 
 import SwiftUI
 import SwiftGit2
+import Clibgit2
 
 struct BranchView: View {
-    var error: Error?
+    @State var error: Error?
     var repo: Repository
     var branch: Branch
     var commit: Commit?
     var tree: Tree?
+    @State var currentEntry: Tree.Entry?
     
     init(repo: Repository, branch: Branch) {
         self.repo = repo
@@ -28,7 +30,6 @@ struct BranchView: View {
         }
         
         guard let oid = self.commit?.tree.oid else { return }
-//        let oid = OID(string: "0dc9049b9696fbe85d4cd9d739a50b5d998ea56e")!
         switch repo.tree(oid) {
         case let .success(obj):
             self.tree = obj
@@ -50,6 +51,19 @@ struct BranchView: View {
             if tree != nil {
                 TreeView(repo: repo, tree: tree!)
             }
+            
+            if currentEntry != nil {
+                Text("Current Entry")
+                EntryView(repo: repo, entry: currentEntry!, parent: nil, showContent: true)
+            }
+        }.onPreferenceChange(CurrentEntryPreferenceKey.self) { res in
+            print("changed key \(String(describing: res))")
+            guard let entry = res?.entry else { return }
+            
+            print("found \(entry.name)")
+
+            self.currentEntry = entry
+            
         }
     }
 }

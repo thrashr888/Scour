@@ -13,7 +13,7 @@ struct TreeView: View {
     var repo: Repository
     var tree: Tree
     var parent: Tree.Entry?
-
+    
     var body: some View {
         VStack(alignment: .leading) {
 //            Text("Tree: \(tree.oid.description)")
