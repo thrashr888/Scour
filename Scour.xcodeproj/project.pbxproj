@@ -16,8 +16,6 @@
 		8A52BCCA24B2FCE600F3AAAD /* TreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCC924B2FCE600F3AAAD /* TreeView.swift */; };
 		8A52BCCC24B2FED800F3AAAD /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCCB24B2FED800F3AAAD /* EntryView.swift */; };
 		8A52BCCE24B3036A00F3AAAD /* BlobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCCD24B3036A00F3AAAD /* BlobView.swift */; };
-		8A63F6F024ADB3F600BCB8EB /* SwiftGit2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A63F6E024ADB3A700BCB8EB /* SwiftGit2.framework */; };
-		8A63F6F224ADB84500BCB8EB /* SwiftGit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A63F6E024ADB3A700BCB8EB /* SwiftGit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8AD9729A2496A895000A28BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD972992496A895000A28BA /* AppDelegate.swift */; };
 		8AD9729C2496A895000A28BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD9729B2496A895000A28BA /* ContentView.swift */; };
 		8AD9729F2496A895000A28BA /* Scour.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AD9729D2496A895000A28BA /* Scour.xcdatamodeld */; };
@@ -26,65 +24,6 @@
 		8AD972A72496A897000A28BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A52496A897000A28BA /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		8A63F6DF24ADB3A700BCB8EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BEB31F231A0D6F7A00F525B9;
-			remoteInfo = "SwiftGit2-OSX";
-		};
-		8A63F6E124ADB3A700BCB8EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BEB31F2E1A0D6F7A00F525B9;
-			remoteInfo = "SwiftGit2-OSXTests";
-		};
-		8A63F6E324ADB3A700BCB8EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 621E66B41C72958800A0F352;
-			remoteInfo = "SwiftGit2-iOS";
-		};
-		8A63F6E524ADB3A700BCB8EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 621E66CE1C72958D00A0F352;
-			remoteInfo = "SwiftGit2-iOSTests";
-		};
-		8A63F6E724ADB3A700BCB8EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BEB31F8F1A0E563900F525B9;
-			remoteInfo = "libgit2-OSX";
-		};
-		8A63F6E924ADB3A700BCB8EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 621E66E11C729CE500A0F352;
-			remoteInfo = "libgit2-iOS";
-		};
-		8A63F6EB24ADB3A700BCB8EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 621E66EC1C729EB800A0F352;
-			remoteInfo = "OpenSSL-iOS";
-		};
-		8A63F6ED24ADB3A700BCB8EB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 621E66F21C729EBB00A0F352;
-			remoteInfo = "libssh2-iOS";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		8A63F6F124ADB82C00BCB8EB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -92,7 +31,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8A63F6F224ADB84500BCB8EB /* SwiftGit2.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +46,6 @@
 		8A52BCC924B2FCE600F3AAAD /* TreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeView.swift; sourceTree = "<group>"; };
 		8A52BCCB24B2FED800F3AAAD /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		8A52BCCD24B3036A00F3AAAD /* BlobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlobView.swift; sourceTree = "<group>"; };
-		8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftGit2.xcodeproj; path = SwiftGit2/SwiftGit2.xcodeproj; sourceTree = "<group>"; };
 		8AD972962496A895000A28BA /* Scour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD972992496A895000A28BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8AD9729B2496A895000A28BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -125,7 +62,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A63F6F024ADB3F600BCB8EB /* SwiftGit2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,21 +84,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		8A63F6D424ADB3A700BCB8EB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8A63F6E024ADB3A700BCB8EB /* SwiftGit2.framework */,
-				8A63F6E224ADB3A700BCB8EB /* SwiftGit2-OSXTests.xctest */,
-				8A63F6E424ADB3A700BCB8EB /* SwiftGit2.framework */,
-				8A63F6E624ADB3A700BCB8EB /* SwiftGit2-iOSTests.xctest */,
-				8A63F6E824ADB3A700BCB8EB /* libgit2.a */,
-				8A63F6EA24ADB3A700BCB8EB /* libgit2.a */,
-				8A63F6EC24ADB3A700BCB8EB /* libssl.a */,
-				8A63F6EE24ADB3A700BCB8EB /* libssh2.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		8A63F6EF24ADB3F600BCB8EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,7 +96,6 @@
 			children = (
 				8AD972982496A895000A28BA /* Scour */,
 				8AD972972496A895000A28BA /* Products */,
-				8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */,
 				8A63F6EF24ADB3F600BCB8EB /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -223,6 +143,7 @@
 				8AD972932496A895000A28BA /* Frameworks */,
 				8AD972942496A895000A28BA /* Resources */,
 				8A63F6F124ADB82C00BCB8EB /* CopyFiles */,
+				8A74EF3A24B6F912001643BB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -259,77 +180,12 @@
 			mainGroup = 8AD9728D2496A895000A28BA;
 			productRefGroup = 8AD972972496A895000A28BA /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 8A63F6D424ADB3A700BCB8EB /* Products */;
-					ProjectRef = 8A63F6D324ADB3A700BCB8EB /* SwiftGit2.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8AD972952496A895000A28BA /* Scour */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		8A63F6E024ADB3A700BCB8EB /* SwiftGit2.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftGit2.framework;
-			remoteRef = 8A63F6DF24ADB3A700BCB8EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8A63F6E224ADB3A700BCB8EB /* SwiftGit2-OSXTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "SwiftGit2-OSXTests.xctest";
-			remoteRef = 8A63F6E124ADB3A700BCB8EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8A63F6E424ADB3A700BCB8EB /* SwiftGit2.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftGit2.framework;
-			remoteRef = 8A63F6E324ADB3A700BCB8EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8A63F6E624ADB3A700BCB8EB /* SwiftGit2-iOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "SwiftGit2-iOSTests.xctest";
-			remoteRef = 8A63F6E524ADB3A700BCB8EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8A63F6E824ADB3A700BCB8EB /* libgit2.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libgit2.a;
-			remoteRef = 8A63F6E724ADB3A700BCB8EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8A63F6EA24ADB3A700BCB8EB /* libgit2.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libgit2.a;
-			remoteRef = 8A63F6E924ADB3A700BCB8EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8A63F6EC24ADB3A700BCB8EB /* libssl.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libssl.a;
-			remoteRef = 8A63F6EB24ADB3A700BCB8EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8A63F6EE24ADB3A700BCB8EB /* libssh2.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libssh2.a;
-			remoteRef = 8A63F6ED24ADB3A700BCB8EB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8AD972942496A895000A28BA /* Resources */ = {
@@ -343,6 +199,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8A74EF3A24B6F912001643BB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/Mac/SwiftGit2.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8AD972922496A895000A28BA /* Sources */ = {
