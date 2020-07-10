@@ -40,6 +40,7 @@ struct ContentView: View {
                 .padding([.top, .leading, .trailing])
                 
                 Divider()
+                    .padding(.top, 2.0)
 
                 GitView(self.currentUrl)
             }

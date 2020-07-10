@@ -33,13 +33,15 @@ struct BranchView: View {
         switch repo.tree(oid) {
         case let .success(obj):
             self.tree = obj
+            let firstKey = obj.entries.keys.sorted()[0]
+            self.currentEntry = obj.entries[firstKey]
         case let .failure(error):
             self.error = error
         }
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             if error != nil {
                 ErrorView(error: error!)
             }
@@ -48,22 +50,25 @@ struct BranchView: View {
                 CommitView(commit: commit!)
             }
             
-            if tree != nil {
-                TreeView(repo: repo, tree: tree!)
+            HStack(alignment: .top) {
+                if tree != nil {
+                    ScrollView([.vertical]) {
+                        TreeView(repo: repo, tree: tree!, currentEntry: self.$currentEntry)
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+                    }
+                    .frame(width: 250)
+                    .background(Color(.sRGB, white: 0.1, opacity: 1))
+                }
+                if currentEntry != nil {
+//                    Text("Current Entry")
+                    ScrollView([.vertical]) {
+                        EntryView(repo: repo, entry: currentEntry!, parent: nil, showContent: true)
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+                    }
+                }
             }
-            
-            if currentEntry != nil {
-                Text("Current Entry")
-                EntryView(repo: repo, entry: currentEntry!, parent: nil, showContent: true)
-            }
-        }.onPreferenceChange(CurrentEntryPreferenceKey.self) { res in
-            print("changed key \(String(describing: res))")
-            guard let entry = res?.entry else { return }
-            
-            print("found \(entry.name)")
-
-            self.currentEntry = entry
-            
         }
     }
 }

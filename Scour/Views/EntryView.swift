@@ -48,9 +48,9 @@ struct EntryView: View {
         self.mode = filemodesByFlag[entry.attributes]!
         
         self.name = entry.name
-        if parent != nil {
-            self.name = "\(parent!.name)/\(entry.name)"
-        }
+//        if parent != nil {
+//            self.name = "\(parent!.name)/\(entry.name)"
+//        }
         
         switch entry.attributes {
         case Int32(GIT_FILEMODE_UNREADABLE.rawValue):
@@ -98,16 +98,19 @@ struct EntryView: View {
             Button(action: {
                 self.pick = PresentableEntry(entry: self.entry, blob: self.blob)
                 print("picked \(self.entry.name)")
+                self.showContent = !self.showContent
             }) {
-                if isBlob || isTree {
+                if isTree {
                     if self.showContent {
-                        Text("+")
+                        Text("+ \(self.name)")
                     } else {
-                        Text("-")
+                        Text("- \(self.name)")
                     }
                 }
-                Text("\(self.name) (\(mode))")
-            }.preference(key: CurrentEntryPreferenceKey.self, value: pick)
+                if isBlob {
+                    Text("\(self.name)")
+                }
+            }.buttonStyle(PlainButtonStyle()).padding(.vertical, 2.0).preference(key: CurrentEntryPreferenceKey.self, value: pick)
             
             if self.error != nil {
                 ErrorView(error: self.error!)
@@ -116,9 +119,9 @@ struct EntryView: View {
             if self.blob != nil && self.showContent {
                 BlobView(blob: blob!)
             }
-            if self.tree != nil && self.showContent {
-                TreeView(repo: repo, tree: tree!, parent: entry)
-            }
+//            if self.tree != nil && self.showContent {
+//                TreeView(repo: repo, tree: tree!, parent: entry).padding([.leading])
+//            }
         }
     }
 }
