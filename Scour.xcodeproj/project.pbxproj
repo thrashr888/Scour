@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A10D4D124B85E7F00EE4C89 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 8A10D4D024B85E7F00EE4C89 /* Down */; };
 		8A50522B24B5AEAD00C75D3D /* GitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A50522A24B5AEAD00C75D3D /* GitView.swift */; };
 		8A52BCB524B2AE2300F3AAAD /* RepoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCB424B2AE2300F3AAAD /* RepoView.swift */; };
 		8A52BCB924B2B9C900F3AAAD /* BranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCB824B2B9C900F3AAAD /* BranchView.swift */; };
@@ -22,6 +23,7 @@
 		8AD972A12496A897000A28BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A02496A897000A28BA /* Assets.xcassets */; };
 		8AD972A42496A897000A28BA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A32496A897000A28BA /* Preview Assets.xcassets */; };
 		8AD972A72496A897000A28BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A52496A897000A28BA /* Main.storyboard */; };
+		8ADBA00E24BA3AC0009A64C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +57,7 @@
 		8AD972A62496A897000A28BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8AD972A82496A897000A28BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AD972A92496A897000A28BA /* Scour.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Scour.entitlements; sourceTree = "<group>"; };
+		8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A10D4D124B85E7F00EE4C89 /* Down in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				8AD972992496A895000A28BA /* AppDelegate.swift */,
+				8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */,
 				8AD9729B2496A895000A28BA /* ContentView.swift */,
 				8A52BCB324B2ADE500F3AAAD /* Views */,
 				8AD972A02496A897000A28BA /* Assets.xcassets */,
@@ -150,6 +155,9 @@
 			dependencies = (
 			);
 			name = Scour;
+			packageProductDependencies = (
+				8A10D4D024B85E7F00EE4C89 /* Down */,
+			);
 			productName = Scour;
 			productReference = 8AD972962496A895000A28BA /* Scour.app */;
 			productType = "com.apple.product-type.application";
@@ -178,6 +186,9 @@
 				Base,
 			);
 			mainGroup = 8AD9728D2496A895000A28BA;
+			packageReferences = (
+				8A10D4CF24B85E7F00EE4C89 /* XCRemoteSwiftPackageReference "Down" */,
+			);
 			productRefGroup = 8AD972972496A895000A28BA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -234,6 +245,7 @@
 				8A52BCC424B2F4EB00F3AAAD /* ErrorView.swift in Sources */,
 				8AD9729A2496A895000A28BA /* AppDelegate.swift in Sources */,
 				8A52BCB524B2AE2300F3AAAD /* RepoView.swift in Sources */,
+				8ADBA00E24BA3AC0009A64C4 /* ViewController.swift in Sources */,
 				8A52BCC624B2F62B00F3AAAD /* TitleView.swift in Sources */,
 				8A52BCC824B2F97B00F3AAAD /* CommitView.swift in Sources */,
 				8A52BCCC24B2FED800F3AAAD /* EntryView.swift in Sources */,
@@ -438,6 +450,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8A10D4CF24B85E7F00EE4C89 /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iwasrobbed/Down.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8A10D4D024B85E7F00EE4C89 /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A10D4CF24B85E7F00EE4C89 /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8AD9729D2496A895000A28BA /* Scour.xcdatamodeld */ = {

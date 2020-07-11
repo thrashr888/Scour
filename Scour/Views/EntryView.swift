@@ -109,6 +109,7 @@ struct EntryView: View {
                 }
                 if isBlob {
                     Text("\(self.name)")
+                    Divider()
                 }
             }.buttonStyle(PlainButtonStyle()).padding(.vertical, 2.0).preference(key: CurrentEntryPreferenceKey.self, value: pick)
             
@@ -117,7 +118,7 @@ struct EntryView: View {
             }
             
             if self.blob != nil && self.showContent {
-                BlobView(blob: blob!)
+                BlobView(blob: blob!, name: self.name)
             }
 //            if self.tree != nil && self.showContent {
 //                TreeView(repo: repo, tree: tree!, parent: entry).padding([.leading])
