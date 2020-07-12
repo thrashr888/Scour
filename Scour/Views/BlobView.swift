@@ -23,15 +23,10 @@ struct BlobView: View {
         self.blob = blob
         self.name = name
         
-        if name.hasSuffix(".md") {
-            self.isMarkdown = true
-        }
-        
         self.content = String(data: blob.data, encoding: .utf8)
-        
-        if isMarkdown {
-            let downMdStr = Down(markdownString: self.content!)
-            attributedStr = try? downMdStr.toAttributedString()
+
+        if name.hasSuffix(".md") {
+            attributedStr = try? Down(markdownString: self.content!).toAttributedString()
         }
     }
     
@@ -40,10 +35,8 @@ struct BlobView: View {
         VStack(alignment: .leading) {
             Group {
                 if content != nil {
-                    if isMarkdown {
-                        Label {
-                            $0.placeholderAttributedString = self.attributedStr!
-                        }
+                    if attributedStr != nil {
+                        TextView(text: self.attributedStr!)
                     } else {
                         Text(content!)
                     }
@@ -55,14 +48,24 @@ struct BlobView: View {
     }
 }
 
-struct Label: NSViewRepresentable {
-    typealias NSViewType = NSTextField
-    fileprivate var configuration = { (view: NSViewType) in }
+struct TextView: NSViewRepresentable {
+  typealias NSViewType = NSTextView
 
-    func makeNSView(context: NSViewRepresentableContext<Self>) -> NSViewType { NSViewType() }
-    func updateNSView(_ uiView: NSViewType, context: NSViewRepresentableContext<Self>) {
-        configuration(uiView)
-    }
+  var text: NSAttributedString
+
+  func makeNSView(context: Context) -> NSTextView {
+    let view = NSTextView()
+    // set background color to show view bounds
+    view.backgroundColor = NSColor.init(calibratedRed: 60, green: 60, blue: 61, alpha: 0)
+    view.drawsBackground = true
+    view.isEditable = false
+    view.isSelectable = false
+    return view
+  }
+
+  func updateNSView(_ nsView: NSTextView, context: Context) {
+    nsView.textStorage?.setAttributedString(text)
+  }
 }
 
 //struct BlobView_Previews: PreviewProvider {
