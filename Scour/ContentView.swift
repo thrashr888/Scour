@@ -45,7 +45,7 @@ struct ContentView: View {
                 GitView(self.currentUrl)
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
-        }.frame(width: 800, height: 600)
+        }
     }
 }
 

@@ -194,15 +194,15 @@
 		8A52BCB324B2ADE500F3AAAD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A52BCB424B2AE2300F3AAAD /* RepoView.swift */,
-				8A50522A24B5AEAD00C75D3D /* GitView.swift */,
-				8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */,
-				8A52BCC524B2F62B00F3AAAD /* TitleView.swift */,
-				8A52BCB824B2B9C900F3AAAD /* BranchView.swift */,
-				8A52BCC924B2FCE600F3AAAD /* TreeView.swift */,
-				8A52BCCB24B2FED800F3AAAD /* EntryView.swift */,
 				8A52BCCD24B3036A00F3AAAD /* BlobView.swift */,
+				8A52BCB824B2B9C900F3AAAD /* BranchView.swift */,
 				8A52BCC724B2F97B00F3AAAD /* CommitView.swift */,
+				8A52BCCB24B2FED800F3AAAD /* EntryView.swift */,
+				8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */,
+				8A50522A24B5AEAD00C75D3D /* GitView.swift */,
+				8A52BCB424B2AE2300F3AAAD /* RepoView.swift */,
+				8A52BCC524B2F62B00F3AAAD /* TitleView.swift */,
+				8A52BCC924B2FCE600F3AAAD /* TreeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

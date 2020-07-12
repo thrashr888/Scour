@@ -25,9 +25,9 @@ struct BlobView: View {
         
         self.content = String(data: blob.data, encoding: .utf8)
 
-        if name.hasSuffix(".md") {
-            attributedStr = try? Down(markdownString: self.content!).toAttributedString()
-        }
+//        if name.hasSuffix(".md") {
+//            attributedStr = try? Down(markdownString: self.content!).toAttributedString()
+//        }
     }
     
     var body: some View {
