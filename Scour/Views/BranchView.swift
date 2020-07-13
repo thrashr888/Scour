@@ -10,26 +10,38 @@ import SwiftUI
 import SwiftGit2
 import Clibgit2
 
+struct CommitName: View {
+    var commit: Commit
+    
+    static let taskDateFormat: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }()
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            Text(commit.oid.description.suffix(6).description)
+                .foregroundColor(Color.gray)
+            Text(commit.message).truncationMode(.tail).lineLimit(/*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/).frame(maxWidth: .infinity, alignment: .leading)
+            Text("\(commit.committer.time, formatter: Self.taskDateFormat)").foregroundColor(Color.gray).multilineTextAlignment(.trailing)
+        }
+    }
+}
+
 struct BranchView: View {
     @State var error: Error?
     var repo: Repository
     var branch: Branch
-    var commit: Commit?
     var commits: [Commit] = []
     @State var tree: Tree?
     @State var currentEntry: Tree.Entry?
     @State var currentCommit: Commit?
+    @State var loading: Bool = false
     
     init(repo: Repository, branch: Branch) {
         self.repo = repo
         self.branch = branch
-        
-        switch repo.commit(branch.commit.oid) {
-        case let .success(obj):
-            commit = obj
-        case let .failure(error):
-            self.error = error
-        }
         
         self.commits = repo.commits(in: branch).compactMap({commit in
             switch commit {
@@ -40,42 +52,26 @@ struct BranchView: View {
                 return nil
             }
         })
-        
-        if self.commit != nil {
-
-            switch repo.tree(commit!.tree.oid) {
-            case let .success(obj):
-                self.tree = obj
-                let firstKey = obj.entries.keys.sorted()[0]
-                currentEntry = obj.entries[firstKey]
-            case let .failure(error):
-                self.error = error
-            }
-            
-//            self.tree = self.getTree(commit: commit!)
-//            guard let tree = self.getTree(commit: commit!) else { return }
-//            self.tree = tree
-//            let firstKey = tree.entries.keys.sorted()[0]
-//            currentEntry = tree.entries[firstKey]
-        }
-//        switch repo.tree(oid) {
-//        case let .success(obj):
-//            tree = obj
-//            let firstKey = obj.entries.keys.sorted()[0]
-//            currentEntry = obj.entries[firstKey]
-//        case let .failure(error):
-//            self.error = error
-//        }
     }
     
-//    mutating func getTree(commit: Commit) -> Tree?{
-//        switch repo.tree(commit.tree.oid) {
-//        case let .success(obj):
-//            return obj
-//        case .failure(_):
-//            return nil
-//        }
-//    }
+    func isCurrentCommit(commit: Commit) -> Bool {
+        return self.currentCommit != nil && commit.oid.description == self.currentCommit!.oid.description
+    }
+    
+    func loadTree(commit: Commit) {
+        switch self.repo.tree(commit.tree.oid) {
+        case let .success(obj):
+            self.tree = obj
+            if self.currentEntry != nil {
+                self.currentEntry = obj.entries[self.currentEntry!.name]
+            } else {
+                let firstKey = obj.entries.keys.sorted()[0]
+                self.currentEntry = obj.entries[firstKey]!
+            }
+        case let .failure(error):
+            self.error = error
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -83,9 +79,6 @@ struct BranchView: View {
                 ErrorView(error: error!)
             }
             
-            if commit != nil{
-                CommitView(commit: commit!)
-            }
             if currentCommit != nil{
                 CommitView(commit: currentCommit!)
             }
@@ -96,24 +89,27 @@ struct BranchView: View {
                         ForEach(commits.indices) { i in
 
                             Button(action: {
-
-                                switch self.repo.tree(self.commits[i].tree.oid) {
-                                case let .success(obj):
-                                    self.tree = obj
-                                    let firstKey = obj.entries.keys.sorted()[0]
-                                    self.currentEntry = obj.entries[firstKey]
-                                case let .failure(error):
-                                    self.error = error
-                                }
-                                
+                                if self.loading { return }
+                                self.currentCommit = self.commits[i]
+                                self.loadTree(commit: self.commits[i])
+                                self.loading = false
                             }) {
-                                Text("\(self.commits[i].oid.description.suffix(6).description) \(self.commits[i].message)").padding(.bottom, 3.0).truncationMode(.tail).lineLimit(/*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/).padding(.vertical, 2.0)
-                            }.buttonStyle(PlainButtonStyle())
+                                if self.isCurrentCommit(commit: self.commits[i]) {
+                                    CommitName(commit: self.commits[i]).font(Font.body.bold())
+                                } else {
+                                    CommitName(commit: self.commits[i])
+                                }
+                            }.buttonStyle(PlainButtonStyle()).onHover { hovering in
+                                if self.loading { return }
+                                self.currentCommit = self.commits[i]
+                                self.loadTree(commit: self.commits[i])
+                                self.loading = false
+                            }
                             
                         }
                     }.padding()
                 }
-                .frame(width: 250)
+                .frame(width: 300)
                 .background(Color(.sRGB, white: 0.1, opacity: 1))
                 
                 if tree != nil {

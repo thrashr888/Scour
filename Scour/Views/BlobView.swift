@@ -38,7 +38,8 @@ struct BlobView: View {
                     if attributedStr != nil {
                         TextView(text: self.attributedStr!)
                     } else {
-                        Text(content!)
+//                        Text(content!)
+                        TextField("", text: .constant(content!))
                     }
                 } else {
                     Text("Cannot read this file")
