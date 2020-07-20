@@ -24,7 +24,9 @@ struct TreeView: View {
 //                    EntryView(repo: self.repo, entry: self.tree.entries[key]!, parent: self.parent)
 
                     if self.tree.entries[key]!.attributes == Int32(GIT_FILEMODE_TREE.rawValue) {
-                        Text("- \(self.tree.entries[key]!.name)")
+                        HStack {
+                            Text("􀄧 \(self.tree.entries[key]!.name)")
+                        }
                     }
 
                     if self.tree.entries[key]!.attributes == Int32(GIT_FILEMODE_BLOB.rawValue) {

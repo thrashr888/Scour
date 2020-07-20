@@ -33,29 +33,72 @@ struct BranchView: View {
     @State var error: Error?
     var repo: Repository
     var branch: Branch
-    var commits: [Commit] = []
     @State var tree: Tree?
-    @State var currentEntry: Tree.Entry?
     @State var currentCommit: Commit?
-    @State var loading: Bool = false
+    @State var currentCommitIndex: Int = 0
+    @State var currentEntry: Tree.Entry?
+    @State var loadingTree: Bool = false
+    
+    var commitIterator: CommitIterator
+    @State private var commits: [Commit] = []
+    @State var commitPageCount: Int = 15
+    @State var loadingCommits: Bool = false
+    @State var hasMoreCommits: Bool = true
     
     init(repo: Repository, branch: Branch) {
         self.repo = repo
         self.branch = branch
         
-        self.commits = repo.commits(in: branch).compactMap({commit in
-            switch commit {
-            case let .success(obj):
-                return obj
-            case let .failure(error):
-                self.error = error
-                return nil
-            }
-        })
+        self.commitIterator = repo.commits(in: branch)
+//        self.loadNextCommits()
     }
     
     func isCurrentCommit(commit: Commit) -> Bool {
         return self.currentCommit != nil && commit.oid.description == self.currentCommit!.oid.description
+    }
+    
+    func prevCommit() {
+        if self.currentCommitIndex > 0 {
+            self.currentCommitIndex -= 1
+            self.currentCommit = self.commits[self.currentCommitIndex]
+        }
+    }
+    
+    func nextCommit() {
+        if self.currentCommitIndex < self.commits.count - 1 {
+            self.currentCommitIndex += 1
+            self.currentCommit = self.commits[self.currentCommitIndex]
+        }
+    }
+    
+    func loadNextCommits() {
+        loadingCommits = true
+//        print("load")
+//        print(commits)
+        var loopCount = -1
+        for commit in commitIterator {
+//            print(commit)
+            switch commit {
+            case nil:
+                self.hasMoreCommits = false
+            case let .success(obj):
+                print(obj.oid.description)
+                commits.append(obj)
+            case let .failure(error):
+                self.error = error
+            }
+            
+            loopCount += 1
+            if loopCount == commitPageCount {
+                break
+            }
+        }
+        if loopCount < commitPageCount {
+            self.hasMoreCommits = false
+        }
+        print("done \(loopCount) \(commitPageCount)")
+//        print(commits)
+        loadingCommits = false
     }
     
     func loadTree(commit: Commit) {
@@ -71,6 +114,7 @@ struct BranchView: View {
         case let .failure(error):
             self.error = error
         }
+//        print("done \(self.tree!.oid) \(self.currentEntry!.name)")
     }
     
     var body: some View {
@@ -86,31 +130,62 @@ struct BranchView: View {
             HStack(alignment: .top) {
                 ScrollView([.vertical]) {
                     VStack(alignment: .leading) {
-                        ForEach(commits.indices) { i in
+                        
+                        HStack {
+                            Button(action: {
+                                self.prevCommit()
+                            }) {
+                                Text("􀄤")
+                            }
+                            Button(action: {
+                                self.nextCommit()
+                            }) {
+                                Text("􀄥")
+                            }
+                        }
+                        
+                        ForEach(commits.indices, id: \.self) { i in
 
                             Button(action: {
-                                if self.loading { return }
+                                if self.loadingTree { return }
                                 self.currentCommit = self.commits[i]
+                                self.currentCommitIndex = i
                                 self.loadTree(commit: self.commits[i])
-                                self.loading = false
+                                self.loadingTree = false
                             }) {
                                 if self.isCurrentCommit(commit: self.commits[i]) {
-                                    CommitName(commit: self.commits[i]).font(Font.body.bold())
+                                    HStack {
+                                        Divider()
+                                        CommitName(commit: self.commits[i])
+                                    }.padding(0)
                                 } else {
                                     CommitName(commit: self.commits[i])
                                 }
-                            }.buttonStyle(PlainButtonStyle()).onHover { hovering in
-                                if self.loading { return }
-                                self.currentCommit = self.commits[i]
-                                self.loadTree(commit: self.commits[i])
-                                self.loading = false
                             }
+                            .buttonStyle(PlainButtonStyle())
+//                            .onHover { hovering in
+//                                if self.loadingTree { return }
+//                                self.currentCommit = self.commits[i]
+//                                self.loadTree(commit: self.commits[i])
+//                                self.loadingTree = false
+//                            }
                             
+                        }
+                        
+                        if hasMoreCommits {
+                            Button(action: {
+                                self.loadNextCommits()
+                            }) {
+                                Text("Next").frame(width: 200.0)
+                            }
                         }
                     }.padding()
                 }
                 .frame(width: 300)
                 .background(Color(.sRGB, white: 0.1, opacity: 1))
+                .onAppear() {
+                    self.loadNextCommits()
+                }
                 
                 if tree != nil {
                     ScrollView([.vertical]) {
@@ -123,7 +198,6 @@ struct BranchView: View {
                 }
                 
                 if currentEntry != nil {
-//                    Text("Current Entry")
                     ScrollView([.vertical]) {
                         EntryView(repo: repo, entry: currentEntry!, parent: nil, showContent: true)
                             .padding()
