@@ -9,6 +9,7 @@
 import SwiftUI
 import SwiftGit2
 import Clibgit2
+import HotKey
 
 struct CommitName: View {
     var commit: Commit
@@ -45,12 +46,17 @@ struct BranchView: View {
     @State var loadingCommits: Bool = false
     @State var hasMoreCommits: Bool = true
     
+    var downKey = HotKey(key: .downArrow, modifiers: [])
+    var upKey = HotKey(key: .upArrow, modifiers: [])
+    
     init(repo: Repository, branch: Branch) {
         self.repo = repo
         self.branch = branch
         
         self.commitIterator = repo.commits(in: branch)
 //        self.loadNextCommits()
+        
+
     }
     
     func isCurrentCommit(commit: Commit) -> Bool {
@@ -185,6 +191,15 @@ struct BranchView: View {
                 .background(Color(.sRGB, white: 0.1, opacity: 1))
                 .onAppear() {
                     self.loadNextCommits()
+                    self.loadTree(commit: self.commits[0])
+                    self.currentCommit = self.commits[0]
+
+                    self.downKey.keyDownHandler = {
+                        self.nextCommit()
+                    }
+                    self.upKey.keyDownHandler = {
+                        self.prevCommit()
+                    }
                 }
                 
                 if tree != nil {
