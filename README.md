@@ -6,6 +6,7 @@ A program that can scrub through git versions of text files.
 - Show commits
 - Show file tree
 - Show blob
+- Key or click through versions
 
 # License
 
