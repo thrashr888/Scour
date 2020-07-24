@@ -12,10 +12,11 @@ import SwiftGit2
 struct GitView: View {
     var repo: Repository?
     var error: Error?
+    @State var url: URL
     
-    init(_ path: String) {
-        let url = URL(fileURLWithPath: path)
-
+    init(url: URL) {
+        _url = State(initialValue: url)
+        
         switch Repository.at(url) {
         case let .success(repo):
             self.repo = repo
@@ -38,6 +39,6 @@ struct GitView: View {
 
 struct GitView_Previews: PreviewProvider {
     static var previews: some View {
-        GitView("/Users/thrashr888/workspace/Scour")
+        GitView(url: URL(fileURLWithPath: "/Users/thrashr888/workspace/Scour"))
     }
 }

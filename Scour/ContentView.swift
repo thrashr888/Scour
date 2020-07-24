@@ -27,22 +27,37 @@ struct CurrentEntryPreferenceKey: PreferenceKey {
 }
 
 struct ContentView: View {
-    @State var currentUrl: String = "/Users/thrashr888/workspace/Scour"
+    @State var currentUrl: URL = URL(fileURLWithPath: "/Users/thrashr888/workspace/Scour")
     // https://github.com/SwiftGit2/SwiftGit2.git
 
     var body: some View {
         HStack {
-            VStack {
-                HStack {
-                    TextField("Path", text: self.$currentUrl)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+            VStack(alignment: .leading) {
+                HStack(alignment: .center) {
+                    Button("Choose folder") {
+                        let panel = NSOpenPanel()
+                        panel.allowsMultipleSelection = false
+                        panel.canChooseFiles = false
+                        panel.canChooseDirectories = true
+                        panel.begin { response in
+                            if response == NSApplication.ModalResponse.OK, let fileUrl = panel.url {
+                                self.currentUrl = fileUrl
+                                print(fileUrl)
+                            }
+                        }
+                    }
+                    
+                    Text(self.currentUrl.path)
+                        .padding(.horizontal, 10.0).padding(.vertical, 7.0)
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .topLeading).background(Color.black)
+                        .border(Color.gray, width: 2)
                 }
                 .padding([.top, .leading, .trailing])
                 
                 Divider()
                     .padding(.top, 2.0)
 
-                GitView(self.currentUrl)
+                GitView(url: self.currentUrl)
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
         }

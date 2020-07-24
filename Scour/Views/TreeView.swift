@@ -18,7 +18,6 @@ struct TreeView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-//            Text("Tree: \(tree.oid.description)")
             ForEach(tree.entries.keys.sorted(), id: \.self) { key in
                 Group {
 //                    EntryView(repo: self.repo, entry: self.tree.entries[key]!, parent: self.parent)
