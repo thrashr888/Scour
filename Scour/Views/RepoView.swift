@@ -21,6 +21,11 @@ struct RepoView: View {
         switch repo.localBranches() {
         case let .success(obj):
             self.branches = obj
+            for (i, branch) in obj.enumerated() {
+                if branch.name == "master" {
+                    _currentBranch = State(initialValue: i)
+                }
+            }
         case let .failure(error):
             self.error = error
         }
@@ -33,7 +38,7 @@ struct RepoView: View {
             }
             if branches != nil {
                 Picker("Branch", selection: $currentBranch) {
-                    ForEach(branches!.indices) { i in
+                    ForEach(branches!.indices, id: \.self) { i in
                         Text("\(self.branches![i].name)").tag(i)
                     }
                 }
