@@ -9,7 +9,6 @@
 import SwiftUI
 import SwiftGit2
 import Clibgit2
-import HotKey
 
 struct CommitName: View {
     var commit: Commit
@@ -30,6 +29,32 @@ struct CommitName: View {
     }
 }
 
+struct KeyEventHandling: NSViewRepresentable {
+    var callback: (NSEvent) -> Void
+    
+    class KeyView: NSView {
+        var callback: ((NSEvent) -> Void)? = nil
+        override var acceptsFirstResponder: Bool { true }
+        override func keyDown(with event: NSEvent) {
+            super.keyDown(with: event)
+//            print(">> key \(event.charactersIgnoringModifiers ?? "")")
+            self.callback!(event)
+        }
+    }
+
+    func makeNSView(context: Context) -> NSView {
+        let view = KeyView()
+        view.callback = self.callback
+        DispatchQueue.main.async { // wait till next event cycle
+            view.window?.makeFirstResponder(view)
+        }
+        return view
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {
+    }
+}
+
 struct BranchView: View {
     @State var error: Error?
     var repo: Repository
@@ -46,24 +71,20 @@ struct BranchView: View {
     @State var loadingCommits: Bool = false
     @State var hasMoreCommits: Bool = true
     
-    var downKey = HotKey(key: .downArrow, modifiers: [])
-    var upKey = HotKey(key: .upArrow, modifiers: [])
-    
     init(repo: Repository, branch: Branch) {
         self.repo = repo
         self.branch = branch
         
         self.commitIterator = repo.commits(in: branch)
-//        self.loadNextCommits()
-        
 
+        print("init \(self.repo.directoryURL!.path)")
     }
     
     func isCurrentCommit(commit: Commit) -> Bool {
         return self.currentCommit != nil && commit.oid.description == self.currentCommit!.oid.description
     }
     
-    func prevCommit() {
+    func previousCommit() {
         if self.currentCommitIndex > 0 {
             self.currentCommitIndex -= 1
             self.currentCommit = self.commits[self.currentCommitIndex]
@@ -88,7 +109,7 @@ struct BranchView: View {
             case nil:
                 self.hasMoreCommits = false
             case let .success(obj):
-                print(obj.oid.description)
+//                print(obj.oid.description)
                 commits.append(obj)
             case let .failure(error):
                 self.error = error
@@ -123,6 +144,17 @@ struct BranchView: View {
 //        print("done \(self.tree!.oid) \(self.currentEntry!.name)")
     }
     
+    func onKeyEvent(event: NSEvent) {
+//        print(">> key \(event.charactersIgnoringModifiers ?? "")")
+        if event.keyCode == 125 || event.keyCode == 124 || event.keyCode == 47 {
+            // down, right, "."
+            self.nextCommit()
+        } else if event.keyCode == 126 || event.keyCode == 123 || event.keyCode == 43 {
+            // up, left, ","
+            self.previousCommit()
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if error != nil {
@@ -139,7 +171,7 @@ struct BranchView: View {
                         
                         HStack {
                             Button(action: {
-                                self.prevCommit()
+                                self.previousCommit()
                             }) {
                                 Text("􀄤")
                             }
@@ -190,16 +222,11 @@ struct BranchView: View {
                 .frame(width: 300)
                 .background(Color(.sRGB, white: 0.1, opacity: 1))
                 .onAppear() {
+//                    print("onAppear")
+                    self.commits = []
                     self.loadNextCommits()
                     self.loadTree(commit: self.commits[0])
                     self.currentCommit = self.commits[0]
-
-                    self.downKey.keyDownHandler = {
-                        self.nextCommit()
-                    }
-                    self.upKey.keyDownHandler = {
-                        self.prevCommit()
-                    }
                 }
                 
                 if tree != nil {
@@ -221,6 +248,7 @@ struct BranchView: View {
                 }
             }
         }
+        .background(KeyEventHandling(callback: onKeyEvent))
     }
 }
 
