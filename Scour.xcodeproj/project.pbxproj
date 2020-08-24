@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A04B15D24F1A529008342B1 /* NewEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A04B15C24F1A529008342B1 /* NewEntryView.swift */; };
 		8A10D4D124B85E7F00EE4C89 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 8A10D4D024B85E7F00EE4C89 /* Down */; };
+		8A20AEF024E51A4D009FAC22 /* FinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AEEF24E51A4D009FAC22 /* FinderView.swift */; };
+		8A20AF0424E51F51009FAC22 /* BranchSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AF0324E51F51009FAC22 /* BranchSelectView.swift */; };
+		8A20AF0624E5223F009FAC22 /* CommitSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AF0524E5223F009FAC22 /* CommitSelectView.swift */; };
+		8A20AF0824E527E7009FAC22 /* TreeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AF0724E527E7009FAC22 /* TreeSelectView.swift */; };
+		8A24BD2724CAB8C0004D786F /* FolderSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A24BD2624CAB8C0004D786F /* FolderSelectView.swift */; };
 		8A50522B24B5AEAD00C75D3D /* GitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A50522A24B5AEAD00C75D3D /* GitView.swift */; };
 		8A52BCB524B2AE2300F3AAAD /* RepoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCB424B2AE2300F3AAAD /* RepoView.swift */; };
 		8A52BCB924B2B9C900F3AAAD /* BranchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCB824B2B9C900F3AAAD /* BranchView.swift */; };
 		8A52BCC424B2F4EB00F3AAAD /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */; };
-		8A52BCC624B2F62B00F3AAAD /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCC524B2F62B00F3AAAD /* TitleView.swift */; };
 		8A52BCC824B2F97B00F3AAAD /* CommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCC724B2F97B00F3AAAD /* CommitView.swift */; };
 		8A52BCCA24B2FCE600F3AAAD /* TreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCC924B2FCE600F3AAAD /* TreeView.swift */; };
 		8A52BCCC24B2FED800F3AAAD /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A52BCCB24B2FED800F3AAAD /* EntryView.swift */; };
@@ -25,6 +30,7 @@
 		8AD972A72496A897000A28BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A52496A897000A28BA /* Main.storyboard */; };
 		8ADBA00E24BA3AC0009A64C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */; };
 		8ADBA06324BA8A97009A64C4 /* SwiftGit2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADBA03824BA8A53009A64C4 /* SwiftGit2.framework */; };
+		8AFBAC6024CBF3D9009467C9 /* UrlsPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFBAC5F24CBF3D9009467C9 /* UrlsPlist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,11 +161,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8A04B15C24F1A529008342B1 /* NewEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryView.swift; sourceTree = "<group>"; };
+		8A20AEEF24E51A4D009FAC22 /* FinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderView.swift; sourceTree = "<group>"; };
+		8A20AF0324E51F51009FAC22 /* BranchSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchSelectView.swift; sourceTree = "<group>"; };
+		8A20AF0524E5223F009FAC22 /* CommitSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitSelectView.swift; sourceTree = "<group>"; };
+		8A20AF0724E527E7009FAC22 /* TreeSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeSelectView.swift; sourceTree = "<group>"; };
+		8A24BD2624CAB8C0004D786F /* FolderSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectView.swift; sourceTree = "<group>"; };
 		8A50522A24B5AEAD00C75D3D /* GitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitView.swift; sourceTree = "<group>"; };
 		8A52BCB424B2AE2300F3AAAD /* RepoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoView.swift; sourceTree = "<group>"; };
 		8A52BCB824B2B9C900F3AAAD /* BranchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchView.swift; sourceTree = "<group>"; };
 		8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
-		8A52BCC524B2F62B00F3AAAD /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		8A52BCC724B2F97B00F3AAAD /* CommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitView.swift; sourceTree = "<group>"; };
 		8A52BCC924B2FCE600F3AAAD /* TreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeView.swift; sourceTree = "<group>"; };
 		8A52BCCB24B2FED800F3AAAD /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
@@ -176,6 +187,7 @@
 		8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8ADBA02B24BA8A53009A64C4 /* SwiftGit2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftGit2.xcodeproj; path = SwiftGit2/SwiftGit2.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8ADBA04724BA8A6D009A64C4 /* SwiftGit2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftGit2.xcodeproj; path = SwiftGit2/SwiftGit2.xcodeproj; sourceTree = "<group>"; };
+		8AFBAC5F24CBF3D9009467C9 /* UrlsPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlsPlist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,18 +203,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A04B14824F18F04008342B1 /* Finder */ = {
+			isa = PBXGroup;
+			children = (
+				8A20AEEF24E51A4D009FAC22 /* FinderView.swift */,
+				8A24BD2624CAB8C0004D786F /* FolderSelectView.swift */,
+				8A20AF0324E51F51009FAC22 /* BranchSelectView.swift */,
+				8A20AF0524E5223F009FAC22 /* CommitSelectView.swift */,
+				8A20AF0724E527E7009FAC22 /* TreeSelectView.swift */,
+			);
+			path = Finder;
+			sourceTree = "<group>";
+		};
+		8A04B15B24F1A178008342B1 /* _Archive */ = {
+			isa = PBXGroup;
+			children = (
+				8A52BCB424B2AE2300F3AAAD /* RepoView.swift */,
+				8A50522A24B5AEAD00C75D3D /* GitView.swift */,
+				8A52BCC924B2FCE600F3AAAD /* TreeView.swift */,
+				8A52BCCB24B2FED800F3AAAD /* EntryView.swift */,
+				8A52BCB824B2B9C900F3AAAD /* BranchView.swift */,
+				8A52BCC724B2F97B00F3AAAD /* CommitView.swift */,
+			);
+			path = _Archive;
+			sourceTree = "<group>";
+		};
 		8A52BCB324B2ADE500F3AAAD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8A04B15B24F1A178008342B1 /* _Archive */,
 				8A52BCCD24B3036A00F3AAAD /* BlobView.swift */,
-				8A52BCB824B2B9C900F3AAAD /* BranchView.swift */,
-				8A52BCC724B2F97B00F3AAAD /* CommitView.swift */,
-				8A52BCCB24B2FED800F3AAAD /* EntryView.swift */,
 				8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */,
-				8A50522A24B5AEAD00C75D3D /* GitView.swift */,
-				8A52BCB424B2AE2300F3AAAD /* RepoView.swift */,
-				8A52BCC524B2F62B00F3AAAD /* TitleView.swift */,
-				8A52BCC924B2FCE600F3AAAD /* TreeView.swift */,
+				8A04B15C24F1A529008342B1 /* NewEntryView.swift */,
+				8A04B14824F18F04008342B1 /* Finder */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -235,6 +268,7 @@
 		8AD972982496A895000A28BA /* Scour */ = {
 			isa = PBXGroup;
 			children = (
+				8AFBAC4C24CBF3A7009467C9 /* Models */,
 				8AD972992496A895000A28BA /* AppDelegate.swift */,
 				8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */,
 				8AD9729B2496A895000A28BA /* ContentView.swift */,
@@ -286,6 +320,14 @@
 				8ADBA06224BA8A6D009A64C4 /* libssh2.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8AFBAC4C24CBF3A7009467C9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8AFBAC5F24CBF3D9009467C9 /* UrlsPlist.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -515,15 +557,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A52BCCA24B2FCE600F3AAAD /* TreeView.swift in Sources */,
+				8A20AEF024E51A4D009FAC22 /* FinderView.swift in Sources */,
 				8A52BCB924B2B9C900F3AAAD /* BranchView.swift in Sources */,
+				8AFBAC6024CBF3D9009467C9 /* UrlsPlist.swift in Sources */,
+				8A24BD2724CAB8C0004D786F /* FolderSelectView.swift in Sources */,
 				8A52BCCE24B3036A00F3AAAD /* BlobView.swift in Sources */,
+				8A04B15D24F1A529008342B1 /* NewEntryView.swift in Sources */,
 				8AD9729C2496A895000A28BA /* ContentView.swift in Sources */,
+				8A20AF0624E5223F009FAC22 /* CommitSelectView.swift in Sources */,
+				8A20AF0824E527E7009FAC22 /* TreeSelectView.swift in Sources */,
 				8AD9729F2496A895000A28BA /* Scour.xcdatamodeld in Sources */,
 				8A52BCC424B2F4EB00F3AAAD /* ErrorView.swift in Sources */,
 				8AD9729A2496A895000A28BA /* AppDelegate.swift in Sources */,
+				8A20AF0424E51F51009FAC22 /* BranchSelectView.swift in Sources */,
 				8A52BCB524B2AE2300F3AAAD /* RepoView.swift in Sources */,
 				8ADBA00E24BA3AC0009A64C4 /* ViewController.swift in Sources */,
-				8A52BCC624B2F62B00F3AAAD /* TitleView.swift in Sources */,
 				8A52BCC824B2F97B00F3AAAD /* CommitView.swift in Sources */,
 				8A52BCCC24B2FED800F3AAAD /* EntryView.swift in Sources */,
 				8A50522B24B5AEAD00C75D3D /* GitView.swift in Sources */,

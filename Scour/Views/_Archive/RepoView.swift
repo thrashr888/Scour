@@ -45,6 +45,7 @@ struct RepoView: View {
                 .padding(.horizontal).padding([.bottom], 2)
 
                 BranchView(repo: self.repo, branch: branches![self.currentBranch])
+                
             }
         }
     }

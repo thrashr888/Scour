@@ -33,7 +33,7 @@ struct BlobView: View {
     var body: some View {
 //        Text(blob.data.description)
         VStack(alignment: .leading) {
-            Group {
+            ScrollView([.vertical]) {
                 if content != nil {
                     if attributedStr != nil {
                         TextView(text: self.attributedStr!)
@@ -42,7 +42,7 @@ struct BlobView: View {
                         TextField("", text: .constant(content!))
                     }
                 } else {
-                    Text("Cannot read this file")
+                    Text("Cannot read file: \(name)")
                 }
             }
         }
@@ -60,7 +60,8 @@ struct TextView: NSViewRepresentable {
     view.backgroundColor = NSColor.init(calibratedRed: 60, green: 60, blue: 61, alpha: 0)
     view.drawsBackground = true
     view.isEditable = false
-    view.isSelectable = false
+    view.isSelectable = true
+    view.isRulerVisible = true
     return view
   }
 
@@ -69,8 +70,9 @@ struct TextView: NSViewRepresentable {
   }
 }
 
-//struct BlobView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BlobView()
-//    }
-//}
+struct BlobView_Previews: PreviewProvider {
+    static var previews: some View {
+//        BlobView(Blob(""), "test.md")
+        TextField("", text: .constant("test"))
+    }
+}
