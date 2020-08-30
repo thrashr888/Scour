@@ -6,25 +6,25 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
-import SwiftGit2
 import Clibgit2
+import SwiftGit2
+import SwiftUI
 
 struct TreeView: View {
     var repo: Repository
     var tree: Tree
-    var parent: Tree.Entry? = nil
+    var parent: Tree.Entry?
     @Binding var currentEntry: Tree.Entry?
-    
+
     private var dirs: [Tree.Entry] = []
     private var files: [Tree.Entry] = []
-    
+
     init(repo: Repository, tree: Tree, parent: Tree.Entry? = nil, currentEntry: Binding<Tree.Entry?>) {
         self.repo = repo
         self.tree = tree
         self.parent = parent
-        self._currentEntry = currentEntry
-        
+        _currentEntry = currentEntry
+
         for entry in tree.entries {
             if entry.value.attributes == Int32(GIT_FILEMODE_TREE.rawValue) {
                 dirs.append(entry.value)
@@ -36,7 +36,7 @@ struct TreeView: View {
             }
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             List(dirs, id: \.self) { entry in
@@ -49,10 +49,10 @@ struct TreeView: View {
                     Text("\(entry.name)")
                 }.buttonStyle(PlainButtonStyle()).padding(.vertical, 2.0)
             }
-            
+
 //            ForEach(tree.entries.keys.sorted(), id: \.self) { key in
 //                Group {
-////                    EntryView(repo: self.repo, entry: self.tree.entries[key]!, parent: self.parent)
+            ////                    EntryView(repo: self.repo, entry: self.tree.entries[key]!, parent: self.parent)
 //
 //                    if self.tree.entries[key]!.attributes == Int32(GIT_FILEMODE_TREE.rawValue) {
 //                        HStack {
@@ -74,8 +74,8 @@ struct TreeView: View {
     }
 }
 
-//struct TreeView_Previews: PreviewProvider {
+// struct TreeView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        TreeView()
 //    }
-//}
+// }

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
-import SwiftGit2
 import Clibgit2
+import SwiftGit2
+import SwiftUI
 
 struct BranchSelectView: View {
     // input
@@ -19,35 +19,36 @@ struct BranchSelectView: View {
 
     // bound
     @Binding var currentBranch: Branch?
-    
+
     func loadBranches() {
-        switch Repository.at(self.repoUrl) {
+        switch Repository.at(repoUrl) {
         case let .success(repo):
             switch repo.localBranches() {
             case let .success(obj):
-                self.branches = obj
+                branches = obj
 //                for (_, branch) in obj.enumerated() {
 //                    if branch.name == "master" {
 //                        self.currentBranch = branch
 //                    }
 //                }
-            case .failure(_):
+            case .failure:
                 return
             }
-        case .failure(_):
+        case .failure:
             return
         }
     }
-    
+
     var body: some View {
         List(self.branches, id: \.self, selection: $currentBranch) { branch in
             Text(branch.name).tag(branch)
-        }.onAppear(perform: loadBranches)
+        }
+        .onAppear(perform: loadBranches)
     }
 }
 
-//struct BranchSelectView_Previews: PreviewProvider {
+// struct BranchSelectView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        BranchSelectView()
 //    }
-//}
+// }

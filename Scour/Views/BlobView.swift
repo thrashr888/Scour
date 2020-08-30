@@ -7,9 +7,9 @@
 //
 
 import AppKit
-import SwiftUI
-import SwiftGit2
 import Down
+import SwiftGit2
+import SwiftUI
 
 struct BlobView: View {
     var blob: Blob
@@ -18,18 +18,18 @@ struct BlobView: View {
     var downView: DownView?
     var attributedStr: NSAttributedString?
     var isMarkdown = false
-    
-    init(blob: Blob, name: String){
+
+    init(blob: Blob, name: String) {
         self.blob = blob
         self.name = name
-        
-        self.content = String(data: blob.data, encoding: .utf8)
+
+        content = String(data: blob.data, encoding: .utf8)
 
 //        if name.hasSuffix(".md") {
 //            attributedStr = try? Down(markdownString: self.content!).toAttributedString()
 //        }
     }
-    
+
     var body: some View {
 //        Text(blob.data.description)
         VStack(alignment: .leading) {
@@ -50,24 +50,24 @@ struct BlobView: View {
 }
 
 struct TextView: NSViewRepresentable {
-  typealias NSViewType = NSTextView
+    typealias NSViewType = NSTextView
 
-  var text: NSAttributedString
+    var text: NSAttributedString
 
-  func makeNSView(context: Context) -> NSTextView {
-    let view = NSTextView()
-    // set background color to show view bounds
-    view.backgroundColor = NSColor.init(calibratedRed: 60, green: 60, blue: 61, alpha: 0)
-    view.drawsBackground = true
-    view.isEditable = false
-    view.isSelectable = true
-    view.isRulerVisible = true
-    return view
-  }
+    func makeNSView(context _: Context) -> NSTextView {
+        let view = NSTextView()
+        // set background color to show view bounds
+        view.backgroundColor = NSColor(calibratedRed: 60, green: 60, blue: 61, alpha: 0)
+        view.drawsBackground = true
+        view.isEditable = false
+        view.isSelectable = true
+        view.isRulerVisible = true
+        return view
+    }
 
-  func updateNSView(_ nsView: NSTextView, context: Context) {
-    nsView.textStorage?.setAttributedString(text)
-  }
+    func updateNSView(_ nsView: NSTextView, context _: Context) {
+        nsView.textStorage?.setAttributedString(text)
+    }
 }
 
 struct BlobView_Previews: PreviewProvider {

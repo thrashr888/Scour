@@ -9,21 +9,18 @@ import Cocoa
 import Down
 
 final class ViewController: NSViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         renderDownInWebView()
     }
-    
 }
 
 private extension ViewController {
-    
     func renderDownInWebView() {
         let readMeURL = Bundle.main.url(forResource: nil, withExtension: "md")!
         let readMeContents = try! String(contentsOf: readMeURL)
-        
+
         do {
             let downView = try DownView(frame: view.bounds, markdownString: readMeContents, didLoadSuccessfully: {
                 print("Markdown was rendered.")

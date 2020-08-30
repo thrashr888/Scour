@@ -6,18 +6,18 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
 import SwiftGit2
+import SwiftUI
 
 struct CompactCommitView: View {
     var commit: Commit
-    
+
     static let taskDateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         return formatter
     }()
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .lastTextBaseline) {
@@ -37,13 +37,13 @@ struct CompactCommitView: View {
 
 struct CommitView: View {
     var commit: Commit
-    
+
     static let taskDateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         return formatter
     }()
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .lastTextBaseline) {
@@ -61,8 +61,8 @@ struct CommitView: View {
     }
 }
 
-//struct CommitView_Previews: PreviewProvider {
+// struct CommitView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        CommitView()
 //    }
-//}
+// }

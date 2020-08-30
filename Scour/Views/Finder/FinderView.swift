@@ -6,52 +6,70 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
-import SwiftGit2
 import Clibgit2
+import SwiftGit2
+import SwiftUI
 
 struct FinderView: View {
-    @Binding var repoUrl: URL?
-    @Binding var branch: Branch?
-    @Binding var commits: [Commit]
-    @Binding var commit: Commit?
     @Binding var entry: Tree.Entry?
-    
-    func clearRepo() { self.repoUrl = nil }
-    func clearBranch() { self.branch = nil }
-    func clearCommit() { self.commit = nil }
-    
+
+    @ObservedObject var commitsModel: CommitsModel
+
+    func clearRepo() { commitsModel.repoUrl = nil }
+    func clearBranch() { commitsModel.branch = nil }
+    func clearCommit() { commitsModel.commit = nil }
+    func fetch() {
+        if commitsModel.fetch() == nil {
+            // no errors
+            commitsModel.loadCommits()
+        }
+    }
+
     var body: some View {
         VStack {
-            if repoUrl == nil {
-                FolderSelectView(currentUrl: self.$repoUrl)
-            } else if repoUrl != nil && branch == nil {
+            if commitsModel.repoUrl == nil {
+                FolderSelectView(currentUrl: $commitsModel.repoUrl)
+            } else if commitsModel.repoUrl != nil && commitsModel.branch == nil {
                 HStack {
                     Button("<", action: clearRepo)
                     Text("Repo")
-                    Text(repoUrl!.path).frame(height: 13.0).truncationMode(.head)
+                    Text(commitsModel.repoUrl!.path)
+                        .frame(height: 13.0)
+                        .truncationMode(.head)
                     Spacer()
-                }.padding(.top).padding(.leading, 5.0)
-                BranchSelectView(repoUrl: repoUrl!, currentBranch: $branch)
-            } else if repoUrl != nil && branch != nil && commit == nil {
+                }
+                .padding(.top)
+                .padding(.leading, 5.0)
+
+                BranchSelectView(repoUrl: commitsModel.repoUrl!, currentBranch: $commitsModel.branch)
+            } else if commitsModel.repoUrl != nil && commitsModel.branch != nil && commitsModel.commit == nil {
                 HStack {
                     Button("<", action: clearBranch)
-                    Text("Branch \(branch!.name)")
+                    Text("Branch \(commitsModel.branch!.name)")
                     Spacer()
-                }.padding(.top).padding(.leading, 5.0)
-                CommitSelectView(repoUrl: repoUrl!, branch: branch!, commits: $commits, currentCommit: $commit)
-            } else if repoUrl != nil && branch != nil && commit != nil {
+                    Button("fetch", action: fetch)
+                }
+                .padding(.top)
+                .padding(.leading, 5.0)
+
+                CommitSelectView(repoUrl: commitsModel.repoUrl!, branch: commitsModel.branch!, commits: $commitsModel.commits, currentCommit: $commitsModel.commit)
+            } else if commitsModel.repoUrl != nil && commitsModel.branch != nil && commitsModel.commit != nil {
                 HStack {
                     Button("<", action: clearCommit)
                     VStack {
                         HStack {
                             Text("Commit")
-                            Text(commit!.tree.oid.description).frame(height: 13.0).truncationMode(.tail)
+                            Text(commitsModel.commit!.tree.oid.description)
+                                .frame(height: 13.0)
+                                .truncationMode(.tail)
                             Spacer()
                         }
                     }
-                }.padding(.top).padding(.leading, 5.0)
-                TreeSelectView(repoUrl: repoUrl!, commit: commit!, currentEntry: $entry)
+                }
+                .padding(.top)
+                .padding(.leading, 5.0)
+
+                TreeSelectView(repoUrl: commitsModel.repoUrl!, commit: commitsModel.commit!, currentEntry: $entry)
             }
         }
     }
@@ -60,11 +78,8 @@ struct FinderView: View {
 struct FinderView_Previews: PreviewProvider {
     static var previews: some View {
         FinderView(
-            repoUrl: .constant(nil),
-            branch: .constant(nil),
-            commits: .constant([]),
-            commit: .constant(nil),
-            entry: .constant(nil)
+            entry: .constant(nil),
+            commitsModel: CommitsModel()
         )
     }
 }

@@ -6,14 +6,14 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
 import SwiftGit2
+import SwiftUI
 
 struct PresentableEntry: Equatable, Identifiable {
     let id = UUID()
     let entry: Tree.Entry
     let blob: Blob?
-    
+
     static func == (lhs: PresentableEntry, rhs: PresentableEntry) -> Bool {
         lhs.id == rhs.id
     }
@@ -27,51 +27,37 @@ struct CurrentEntryPreferenceKey: PreferenceKey {
 }
 
 struct ContentView: View {
-    @State var repoUrl: URL? = nil
-    @State var branch: Branch? = nil
-    @State var commits: [Commit] = []
-    @State var commit: Commit? = nil
-    @State var entry: Tree.Entry? = nil
-    
-    @State var currentUrl: URL = URL(fileURLWithPath: "/Users/thrashr888/workspace/Scour")
-    // https://github.com/SwiftGit2/SwiftGit2.git
-    
-    func prevCommit() {
-        for (i, commit) in self.commits.enumerated() {
-            if commit == self.commit {
-                if i == 0 { return }
-                
-                self.commit = self.commits[i-1]
-                loadEntry(self.commit!, self.entry!)
-            }
-        }
-    }
-    func nextCommit() {
-        for (i, commit) in self.commits.enumerated() {
-            if commit == self.commit {
-                if i == self.commits.count - 1 { return }
-                
-                self.commit = self.commits[i+1]
-                loadEntry(self.commit!, self.entry!)
-            }
-        }
-    }
-    func loadEntry(_ commit: Commit, _ entry: Tree.Entry) {
-        switch Repository.at(self.repoUrl!) {
-        case let .success(repo):
-            switch repo.tree(commit.tree.oid) {
-            case let .success(obj):
+    @ObservedObject var commitsModel = CommitsModel()
 
-                for e in obj.entries {
-                    if entry.name == e.value.name {
-                        self.entry = e.value
-                    }
+    @State var entry: Tree.Entry? = nil
+
+    func prevCommit() {
+        commitsModel.prevCommit()
+        guard let commit = commitsModel.commit, let entry = self.entry else { return }
+        loadEntry(commit, entry)
+    }
+
+    func nextCommit() {
+        commitsModel.nextCommit()
+        guard let commit = commitsModel.commit, let entry = self.entry else { return }
+        loadEntry(commit, entry)
+    }
+
+    func loadEntry(_ commit: Commit, _ entry: Tree.Entry) {
+        guard let repo = commitsModel.repo else { return }
+
+        // TODO: cache or memoize this?
+
+        switch repo.tree(commit.tree.oid) {
+        case let .success(obj):
+
+            for e in obj.entries {
+                if entry.name == e.value.name {
+                    self.entry = e.value
                 }
-                
-            case .failure(_):
-                return
             }
-        case .failure(_):
+
+        case .failure:
             return
         }
     }
@@ -79,22 +65,31 @@ struct ContentView: View {
     var body: some View {
         HStack {
             HStack {
-                FinderView(repoUrl: $repoUrl, branch: $branch, commits: $commits, commit: $commit, entry: $entry).frame(minWidth: 200, maxWidth: 300, minHeight: 300, maxHeight: .infinity).padding(.trailing)
+                FinderView(entry: $entry, commitsModel: commitsModel)
+                    .frame(minWidth: 200, maxWidth: 300, minHeight: 300, maxHeight: .infinity)
+                    .padding(.trailing)
 
                 VStack {
-                    if commit != nil {
+                    if commitsModel.commit != nil {
                         HStack {
-                            CommitSelectSingleView(commit: commit!)
+                            CommitsLineView(entry: $entry, commitsModel: commitsModel)
                             Button("<", action: prevCommit)
                             Button(">", action: nextCommit)
                         }
-                        .padding(.top, 8.0).padding(.trailing, 5.0)
+                        .padding(.top, 8.0)
+                        .padding(.trailing, 5.0)
+
+                        CommitSelectSingleView(commit: commitsModel.commit!)
+                            .padding(.trailing, 5.0)
+
                         Divider()
                     }
-                    if repoUrl != nil && entry != nil {
-                        NewEntryView(repoUrl: repoUrl!, entry: entry!).frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
+                    if commitsModel.repoUrl != nil && entry != nil {
+                        NewEntryView(repoUrl: commitsModel.repoUrl!, entry: entry!)
+                            .frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
                     } else {
-                        Text(" ").frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
+                        Text(" ")
+                            .frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
                     }
                 }
             }

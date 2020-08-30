@@ -6,19 +6,19 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
-import SwiftGit2
 import Clibgit2
+import SwiftGit2
+import SwiftUI
 
 struct CommitName: View {
     var commit: Commit
-    
+
     static let taskDateFormat: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         return formatter
     }()
-    
+
     var body: some View {
         HStack(alignment: .top) {
             Text(commit.oid.description.suffix(6).description)
@@ -31,28 +31,27 @@ struct CommitName: View {
 
 struct KeyEventHandling: NSViewRepresentable {
     var callback: (NSEvent) -> Void
-    
+
     class KeyView: NSView {
-        var callback: ((NSEvent) -> Void)? = nil
+        var callback: ((NSEvent) -> Void)?
         override var acceptsFirstResponder: Bool { true }
         override func keyDown(with event: NSEvent) {
             super.keyDown(with: event)
 //            print(">> key \(event.charactersIgnoringModifiers ?? "")")
-            self.callback!(event)
+            callback!(event)
         }
     }
 
-    func makeNSView(context: Context) -> NSView {
+    func makeNSView(context _: Context) -> NSView {
         let view = KeyView()
-        view.callback = self.callback
+        view.callback = callback
         DispatchQueue.main.async { // wait till next event cycle
             view.window?.makeFirstResponder(view)
         }
         return view
     }
 
-    func updateNSView(_ nsView: NSView, context: Context) {
-    }
+    func updateNSView(_: NSView, context _: Context) {}
 }
 
 struct BranchView: View {
@@ -64,40 +63,40 @@ struct BranchView: View {
     @State var currentCommitIndex: Int = 0
     @State var currentEntry: Tree.Entry?
     @State var loadingTree: Bool = false
-    
+
     var commitIterator: CommitIterator
     @State private var commits: [Commit] = []
     @State var commitPageCount: Int = 15
     @State var loadingCommits: Bool = false
     @State var hasMoreCommits: Bool = true
-    
+
     init(repo: Repository, branch: Branch) {
         self.repo = repo
         self.branch = branch
-        
-        self.commitIterator = repo.commits(in: branch)
+
+        commitIterator = repo.commits(in: branch)
 
         print("init \(self.repo.directoryURL!.path)")
     }
-    
+
     func isCurrentCommit(commit: Commit) -> Bool {
-        return self.currentCommit != nil && commit.oid.description == self.currentCommit!.oid.description
+        return currentCommit != nil && commit.oid.description == currentCommit!.oid.description
     }
-    
+
     func previousCommit() {
-        if self.currentCommitIndex > 0 {
-            self.currentCommitIndex -= 1
-            self.currentCommit = self.commits[self.currentCommitIndex]
+        if currentCommitIndex > 0 {
+            currentCommitIndex -= 1
+            currentCommit = commits[currentCommitIndex]
         }
     }
-    
+
     func nextCommit() {
-        if self.currentCommitIndex < self.commits.count - 1 {
-            self.currentCommitIndex += 1
-            self.currentCommit = self.commits[self.currentCommitIndex]
+        if currentCommitIndex < commits.count - 1 {
+            currentCommitIndex += 1
+            currentCommit = commits[currentCommitIndex]
         }
     }
-    
+
     func loadNextCommits() {
         loadingCommits = true
 //        print("load")
@@ -107,68 +106,67 @@ struct BranchView: View {
 //            print(commit)
             switch commit {
             case nil:
-                self.hasMoreCommits = false
+                hasMoreCommits = false
             case let .success(obj):
 //                print(obj.oid.description)
                 commits.append(obj)
             case let .failure(error):
                 self.error = error
             }
-            
+
             loopCount += 1
             if loopCount == commitPageCount {
                 break
             }
         }
         if loopCount < commitPageCount {
-            self.hasMoreCommits = false
+            hasMoreCommits = false
         }
         print("done \(loopCount) \(commitPageCount)")
 //        print(commits)
         loadingCommits = false
     }
-    
+
     func loadTree(commit: Commit) {
-        switch self.repo.tree(commit.tree.oid) {
+        switch repo.tree(commit.tree.oid) {
         case let .success(obj):
-            self.tree = obj
-            if self.currentEntry != nil {
-                self.currentEntry = obj.entries[self.currentEntry!.name]
+            tree = obj
+            if currentEntry != nil {
+                currentEntry = obj.entries[currentEntry!.name]
             } else {
                 let firstKey = obj.entries.keys.sorted()[0]
-                self.currentEntry = obj.entries[firstKey]!
+                currentEntry = obj.entries[firstKey]!
             }
         case let .failure(error):
             self.error = error
         }
 //        print("done \(self.tree!.oid) \(self.currentEntry!.name)")
     }
-    
+
     func onKeyEvent(event: NSEvent) {
 //        print(">> key \(event.charactersIgnoringModifiers ?? "")")
         if event.keyCode == 125 || event.keyCode == 124 || event.keyCode == 47 {
             // down, right, "."
-            self.nextCommit()
+            nextCommit()
         } else if event.keyCode == 126 || event.keyCode == 123 || event.keyCode == 43 {
             // up, left, ","
-            self.previousCommit()
+            previousCommit()
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if error != nil {
                 ErrorView(error: error!)
             }
-            
-            if currentCommit != nil{
+
+            if currentCommit != nil {
                 CommitView(commit: currentCommit!)
             }
-            
+
             HStack(alignment: .top) {
                 ScrollView([.vertical]) {
                     VStack(alignment: .leading) {
-                        
                         HStack {
                             Button(action: {
                                 self.previousCommit()
@@ -181,7 +179,7 @@ struct BranchView: View {
                                 Text("􀄥")
                             }
                         }
-                        
+
                         ForEach(commits.indices, id: \.self) { i in
 
                             Button(action: {
@@ -207,9 +205,8 @@ struct BranchView: View {
 //                                self.loadTree(commit: self.commits[i])
 //                                self.loadingTree = false
 //                            }
-                            
                         }
-                        
+
                         if hasMoreCommits {
                             Button(action: {
                                 self.loadNextCommits()
@@ -221,14 +218,14 @@ struct BranchView: View {
                 }
                 .frame(width: 300)
                 .background(Color(.sRGB, white: 0.1, opacity: 1))
-                .onAppear() {
+                .onAppear {
 //                    print("onAppear")
                     self.commits = []
                     self.loadNextCommits()
                     self.loadTree(commit: self.commits[0])
                     self.currentCommit = self.commits[0]
                 }
-                
+
                 if tree != nil {
                     ScrollView([.vertical]) {
                         TreeView(repo: repo, tree: tree!, currentEntry: self.$currentEntry)
@@ -238,7 +235,7 @@ struct BranchView: View {
                     .frame(width: 250)
                     .background(Color(.sRGB, white: 0.1, opacity: 1))
                 }
-                
+
                 if currentEntry != nil {
                     ScrollView([.vertical]) {
                         EntryView(repo: repo, entry: currentEntry!, parent: nil, showContent: true)
@@ -252,8 +249,8 @@ struct BranchView: View {
     }
 }
 
-//struct BranchView_Previews: PreviewProvider {
+// struct BranchView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        BranchView()
 //    }
-//}
+// }

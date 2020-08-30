@@ -13,46 +13,46 @@ struct UrlsPlist {
     static func plistPath() -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(plistName)
     }
-    
+
     static func index() -> [URL] {
         var urls: [URL] = []
-        
-        let paths = self._read()
+
+        let paths = _read()
         for path in paths {
             urls.append(URL(fileURLWithPath: path))
         }
-        
+
         return urls
     }
-    
+
     static func insert(url: URL) -> Error? {
         let path = url.path
-        
-        var arr = self._read()
+
+        var arr = _read()
         arr.append(path)
         return _write(arr)
     }
-    
+
     static func delete(url: URL) -> Error? {
         let path = url.path
-        
-        var arr = self._read()
+
+        var arr = _read()
         let i = arr.firstIndex(of: path)
-        if (i != nil) {
+        if i != nil {
             arr.remove(at: i!)
             return _write(arr)
         }
         return nil
     }
-    
-    static private func _read() -> [String] {
+
+    private static func _read() -> [String] {
         let url = plistPath()
         let arr = NSArray(contentsOfFile: url.path)
 //        print("_read from: \(url.path)")
         return arr as! [String]
     }
-    
-    static private func _write(_ arr: [String] = []) -> Error? {
+
+    private static func _write(_ arr: [String] = []) -> Error? {
         let url = plistPath()
         do {
             print("_write to: \(url.path)")

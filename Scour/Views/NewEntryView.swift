@@ -6,9 +6,9 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
-import SwiftGit2
 import Clibgit2
+import SwiftGit2
+import SwiftUI
 
 var filemodesByFlagNew = [
     Int32(GIT_FILEMODE_UNREADABLE.rawValue): "unreadable",
@@ -23,12 +23,12 @@ struct NewEntryView: View {
     var repoUrl: URL
     var repo: Repository?
     var entry: Tree.Entry
-    
-    var error: Error? = nil
-        
+
+    var error: Error?
+
     var blob: Blob?
     var tree: Tree?
-    
+
     var mode: String
     var isUnreadable = false
     var isTree = false
@@ -39,7 +39,7 @@ struct NewEntryView: View {
 
     init(repoUrl: URL, entry: Tree.Entry) {
         self.repoUrl = repoUrl
-        
+
         switch Repository.at(repoUrl) {
         case let .success(repo):
             self.repo = repo
@@ -60,12 +60,12 @@ struct NewEntryView: View {
             default:
                 break
             }
-            
+
             if isBlob {
                 let oid = entry.object.oid
                 switch self.repo!.blob(oid) {
                 case let .success(obj):
-                    self.blob = obj
+                    blob = obj
                 case let .failure(error):
                     self.error = error
                 }
@@ -73,12 +73,12 @@ struct NewEntryView: View {
         case let .failure(error):
             self.error = error
         }
-        
+
         self.entry = entry
-                        
-        self.mode = filemodesByFlagNew[entry.attributes]!
+
+        mode = filemodesByFlagNew[entry.attributes]!
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             if isBlob {
@@ -86,11 +86,11 @@ struct NewEntryView: View {
                     .fontWeight(.bold)
                     .padding(.horizontal)
             }
-            
+
             if self.error != nil {
                 ErrorView(error: self.error!)
             }
-            
+
             if self.blob != nil {
                 BlobView(blob: blob!, name: entry.name)
             } else {
@@ -101,8 +101,8 @@ struct NewEntryView: View {
     }
 }
 
-//struct NewEntryView_Previews: PreviewProvider {
+// struct NewEntryView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        EntryView()
 //    }
-//}
+// }

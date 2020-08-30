@@ -12,8 +12,11 @@ struct ErrorView: View {
     var error: Error
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Error").font(.subheadline).bold()
-            Text(" \(error.localizedDescription)").italic()
+            Text("Error")
+                .font(.subheadline)
+                .bold()
+            Text(" \(error.localizedDescription)")
+                .italic()
         }
         .padding(.all)
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .topLeading)

@@ -6,17 +6,17 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
 import SwiftGit2
+import SwiftUI
 
 struct GitView: View {
     var repo: Repository?
     var error: Error?
     @State var url: URL
-    
+
     init(url: URL) {
         _url = State(initialValue: url)
-        
+
         switch Repository.at(url) {
         case let .success(repo):
             self.repo = repo
@@ -24,7 +24,7 @@ struct GitView: View {
             self.error = error
         }
     }
-    
+
     var body: some View {
         VStack {
             if self.repo != nil {

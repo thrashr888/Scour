@@ -6,9 +6,9 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import SwiftUI
-import SwiftGit2
 import Clibgit2
+import SwiftGit2
+import SwiftUI
 
 var filemodesByFlag = [
     Int32(GIT_FILEMODE_UNREADABLE.rawValue): "unreadable",
@@ -23,14 +23,14 @@ struct EntryView: View {
     var repo: Repository
     var entry: Tree.Entry
     var error: Error?
-        
+
     var parent: Tree.Entry?
     var blob: Blob?
     var tree: Tree?
-    
+
     @State var showContent = false
     var name: String
-    
+
     var mode: String
     var isUnreadable = false
     var isTree = false
@@ -38,20 +38,20 @@ struct EntryView: View {
     var isBlobExecutable = false
     var isLink = false
     var isCommit = false
-    
+
     init(repo: Repository, entry: Tree.Entry, parent: Tree.Entry? = nil, showContent: Bool = false) {
         self.repo = repo
         self.entry = entry
         self.parent = parent
         _showContent = State(initialValue: showContent)
-                        
-        self.mode = filemodesByFlag[entry.attributes]!
-        
-        self.name = entry.name
+
+        mode = filemodesByFlag[entry.attributes]!
+
+        name = entry.name
 //        if parent != nil {
 //            self.name = "\(parent!.name)/\(entry.name)"
 //        }
-        
+
         switch entry.attributes {
         case Int32(GIT_FILEMODE_UNREADABLE.rawValue):
             isUnreadable = true
@@ -73,26 +73,26 @@ struct EntryView: View {
             let oid = entry.object.oid
             switch repo.blob(oid) {
             case let .success(obj):
-                self.blob = obj
+                blob = obj
             case let .failure(error):
                 self.error = error
             }
         }
-        
+
         if isTree {
             let oid = entry.object.oid
             switch repo.tree(oid) {
             case let .success(obj):
-                self.tree = obj
+                tree = obj
             case let .failure(error):
                 self.error = error
             }
         }
     }
-    
+
 //    @State private var pick: Tree.Entry?
     @State private var pick: PresentableEntry?
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Button(action: {
@@ -112,11 +112,11 @@ struct EntryView: View {
                     Divider()
                 }
             }.buttonStyle(PlainButtonStyle()).padding(.vertical, 2.0).preference(key: CurrentEntryPreferenceKey.self, value: pick)
-            
+
             if self.error != nil {
                 ErrorView(error: self.error!)
             }
-            
+
             if self.blob != nil && self.showContent {
                 BlobView(blob: blob!, name: self.name)
             }
@@ -127,8 +127,8 @@ struct EntryView: View {
     }
 }
 
-//struct EntryView_Previews: PreviewProvider {
+// struct EntryView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        EntryView()
 //    }
-//}
+// }
