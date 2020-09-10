@@ -8,6 +8,7 @@
 
 import SwiftGit2
 import SwiftUI
+import Carbon.HIToolbox.Events
 
 struct PresentableEntry: Equatable, Identifiable {
     let id = UUID()
@@ -26,6 +27,54 @@ struct CurrentEntryPreferenceKey: PreferenceKey {
     }
 }
 
+struct KeyEventHandler: NSViewRepresentable {
+    var callback: (NSEvent) -> Void
+
+    class KeyView: NSView {
+        var callback: ((NSEvent) -> Void)?
+        override var acceptsFirstResponder: Bool { true }
+        override func keyDown(with event: NSEvent) {
+            super.keyDown(with: event)
+//            print(">> key \(event.charactersIgnoringModifiers ?? "")")
+            callback!(event)
+        }
+    }
+
+    func makeNSView(context _: Context) -> NSView {
+        let view = KeyView()
+        view.callback = callback
+        DispatchQueue.main.async { // wait till next event cycle
+            view.window?.makeFirstResponder(view)
+        }
+        return view
+    }
+
+    func updateNSView(_: NSView, context _: Context) {}
+}
+
+struct SummaryView: View {
+    @ObservedObject var commitsModel: CommitsModel
+    
+    var body: some View {
+
+        HStack {
+            if commitsModel.commit != nil {
+                
+                Text("\(commitsModel.repoName!)#\(commitsModel.branch!.name)@\(String(commitsModel.commit!.tree.oid.description.prefix(6)))/\(commitsModel.entry?.name ?? "")")
+                
+            } else if commitsModel.branch != nil {
+                
+                Text("\(commitsModel.repoName!)#\(commitsModel.branch!.name)")
+                
+            } else if commitsModel.repoName != nil {
+                
+                Text("\(commitsModel.repoName!)")
+
+            }
+        }
+    }
+}
+
 struct ContentView: View {
     @ObservedObject var commitsModel = CommitsModel()
 
@@ -33,32 +82,18 @@ struct ContentView: View {
 
     func prevCommit() {
         commitsModel.prevCommit()
-        guard let commit = commitsModel.commit, let entry = self.entry else { return }
-        loadEntry(commit, entry)
     }
 
     func nextCommit() {
         commitsModel.nextCommit()
-        guard let commit = commitsModel.commit, let entry = self.entry else { return }
-        loadEntry(commit, entry)
     }
 
-    func loadEntry(_ commit: Commit, _ entry: Tree.Entry) {
-        guard let repo = commitsModel.repo else { return }
-
-        // TODO: cache or memoize this?
-
-        switch repo.tree(commit.tree.oid) {
-        case let .success(obj):
-
-            for e in obj.entries {
-                if entry.name == e.value.name {
-                    self.entry = e.value
-                }
-            }
-
-        case .failure:
-            return
+    func onKeyEvent(event: NSEvent) {
+        if event.keyCode == kVK_LeftArrow || event.keyCode == kVK_ANSI_Comma {
+            commitsModel.prevCommit()
+        } else
+        if event.keyCode == kVK_RightArrow || event.keyCode == kVK_ANSI_Period {
+           commitsModel.nextCommit()
         }
     }
 
@@ -70,6 +105,8 @@ struct ContentView: View {
                     .padding(.trailing)
 
                 VStack {
+                    SummaryView(commitsModel: commitsModel)
+                    
                     if commitsModel.commit != nil {
                         HStack {
                             CommitsLineView(entry: $entry, commitsModel: commitsModel)
@@ -81,11 +118,13 @@ struct ContentView: View {
 
                         CommitSelectSingleView(commit: commitsModel.commit!)
                             .padding(.trailing, 5.0)
+                            .background(KeyEventHandler(callback: onKeyEvent))
 
                         Divider()
                     }
-                    if commitsModel.repoUrl != nil && entry != nil {
-                        NewEntryView(repoUrl: commitsModel.repoUrl!, entry: entry!)
+                    
+                    if commitsModel.repoUrl != nil && commitsModel.entry != nil {
+                        NewEntryView(commitsModel: commitsModel, entry: commitsModel.entry!)
                             .frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
                     } else {
                         Text(" ")

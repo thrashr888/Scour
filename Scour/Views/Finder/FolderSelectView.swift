@@ -9,6 +9,17 @@
 import SwiftGit2
 import SwiftUI
 
+struct Tooltip: NSViewRepresentable {
+    let tooltip: String
+    func makeNSView(context: NSViewRepresentableContext<Tooltip>) -> NSView {
+        let view = NSView()
+        view.toolTip = tooltip
+        return view
+    }
+    func updateNSView(_ nsView: NSView, context: NSViewRepresentableContext<Tooltip>) {
+    }
+}
+
 struct FolderSelectView: View {
     // internal
     @State var urls: [URL] = []
@@ -43,8 +54,8 @@ struct FolderSelectView: View {
             .padding(.leading, 5.0)
 
             List(self.urls, id: \.self, selection: $currentUrl) { url in
-                Text(url.relativePath)
-                    .truncationMode(.head)
+                Text(url.lastPathComponent).tag(url).truncationMode(.tail)
+                    .overlay(Tooltip(tooltip: url.relativePath))
             }
             .onAppear(perform: loadFolders)
         }

@@ -37,16 +37,10 @@ struct CommitSelectSingleView: View {
 }
 
 struct CommitSelectView: View {
-    // input
-    var repoUrl: URL
-    var branch: Branch
-
-    // bound
-    @Binding var commits: [Commit]
-    @Binding var currentCommit: Commit?
+    @ObservedObject var commitsModel: CommitsModel
 
     var body: some View {
-        List(self.commits, id: \.self, selection: $currentCommit) { commit in
+        List(commitsModel.commits, id: \.self, selection: $commitsModel.commit) { commit in
             CommitSelectSingleView(commit: commit).tag(commit)
         }
         .padding(.vertical, 1)

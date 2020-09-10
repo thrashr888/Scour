@@ -6,9 +6,9 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import Clibgit2
 import SwiftGit2
 import SwiftUI
+import Clibgit2
 
 struct TreeView: View {
     var repo: Repository

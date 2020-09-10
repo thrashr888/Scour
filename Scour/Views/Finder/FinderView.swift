@@ -10,6 +10,33 @@ import Clibgit2
 import SwiftGit2
 import SwiftUI
 
+extension AnyTransition {
+    static var customTransition: AnyTransition {
+      let insertion = AnyTransition.move(edge: .trailing)
+        .combined(with: .scale(scale: 0.2, anchor: .trailing))
+        .combined(with: .opacity)
+      let removal = AnyTransition.move(edge: .leading)
+      return .asymmetric(insertion: insertion, removal: removal)
+    }
+}
+
+// just adds an HStack with some padding
+struct SelectTitleView<Content: View>: View {
+    let content: () -> Content
+    
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+    }
+    
+    var body: some View {
+        HStack {
+            self.content()
+        }
+        .padding(.top)
+        .padding(.leading, 5.0)
+    }
+}
+
 struct FinderView: View {
     @Binding var entry: Tree.Entry?
 
@@ -21,55 +48,70 @@ struct FinderView: View {
     func fetch() {
         if commitsModel.fetch() == nil {
             // no errors
-            commitsModel.loadCommits()
+            commitsModel.loadNextCommits()
         }
     }
 
     var body: some View {
         VStack {
             if commitsModel.repoUrl == nil {
-                FolderSelectView(currentUrl: $commitsModel.repoUrl)
+                
+                VStack {
+                    FolderSelectView(currentUrl: $commitsModel.repoUrl)
+                }.animation(.easeInOut).transition(.slide)
+                
             } else if commitsModel.repoUrl != nil && commitsModel.branch == nil {
-                HStack {
-                    Button("<", action: clearRepo)
-                    Text("Repo")
-                    Text(commitsModel.repoUrl!.path)
-                        .frame(height: 13.0)
-                        .truncationMode(.head)
-                    Spacer()
-                }
-                .padding(.top)
-                .padding(.leading, 5.0)
+                
+                VStack {
+                    SelectTitleView {
+                        Button("<", action: self.clearRepo)
+                        Text(self.commitsModel.repoName!)
+                            .frame(height: 13.0)
+                            .truncationMode(.head)
+                        Text("repo")
+                            .foregroundColor(Color.gray)
+                        Spacer()
+                    }
 
-                BranchSelectView(repoUrl: commitsModel.repoUrl!, currentBranch: $commitsModel.branch)
+                    BranchSelectView(commitsModel: commitsModel)
+                }.animation(.easeInOut).transition(.slide)
+
             } else if commitsModel.repoUrl != nil && commitsModel.branch != nil && commitsModel.commit == nil {
-                HStack {
-                    Button("<", action: clearBranch)
-                    Text("Branch \(commitsModel.branch!.name)")
-                    Spacer()
-                    Button("fetch", action: fetch)
-                }
-                .padding(.top)
-                .padding(.leading, 5.0)
+                
+                VStack {
+                    SelectTitleView {
+                        Button("<", action: self.clearBranch)
+                        Text("\(self.commitsModel.branch!.name)")
+                            .truncationMode(.tail)
+                        Text("branch")
+                            .foregroundColor(Color.gray)
+                        Spacer()
+                        Button("fetch", action: self.fetch)
+                    }
 
-                CommitSelectView(repoUrl: commitsModel.repoUrl!, branch: commitsModel.branch!, commits: $commitsModel.commits, currentCommit: $commitsModel.commit)
+                    CommitSelectView(commitsModel: commitsModel)
+                }.animation(.easeInOut).transition(.slide)
+                
             } else if commitsModel.repoUrl != nil && commitsModel.branch != nil && commitsModel.commit != nil {
-                HStack {
-                    Button("<", action: clearCommit)
-                    VStack {
-                        HStack {
-                            Text("Commit")
-                            Text(commitsModel.commit!.tree.oid.description)
-                                .frame(height: 13.0)
-                                .truncationMode(.tail)
-                            Spacer()
+                
+                VStack {
+                    SelectTitleView {
+                        Button("<", action: self.clearCommit)
+                        VStack {
+                            HStack {
+                                Text(self.commitsModel.commit!.tree.oid.description)
+                                    .frame(height: 13.0)
+                                    .truncationMode(.tail)
+                                Text("commit")
+                                    .foregroundColor(Color.gray)
+                                Spacer()
+                            }
                         }
                     }
-                }
-                .padding(.top)
-                .padding(.leading, 5.0)
 
-                TreeSelectView(repoUrl: commitsModel.repoUrl!, commit: commitsModel.commit!, currentEntry: $entry)
+                    TreeSelectView(commitsModel: commitsModel)
+
+                }.animation(.easeInOut).transition(.slide)
             }
         }
     }

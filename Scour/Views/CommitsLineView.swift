@@ -14,15 +14,19 @@ struct CommitsLineView: View {
     @Binding var entry: Tree.Entry?
 
     @ObservedObject var commitsModel: CommitsModel
-
+    
     var body: some View {
         HStack {
             ForEach(commitsModel.commits, id: \.self) { commit in
                 Group {
                     if commit == self.commitsModel.commit {
-                        Text("●")
+                        Button("●") {
+                            self.commitsModel.loadEntry(commit, self.entry!)
+                        }.buttonStyle(PlainButtonStyle())
                     } else {
-                        Text("・")
+                        Button("・") {
+                            self.commitsModel.loadEntry(commit, self.entry!)
+                        }.buttonStyle(PlainButtonStyle())
                     }
                 }
             }

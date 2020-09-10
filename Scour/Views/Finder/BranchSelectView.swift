@@ -11,36 +11,14 @@ import SwiftGit2
 import SwiftUI
 
 struct BranchSelectView: View {
-    // input
-    var repoUrl: URL
-
-    // internal
-    @State var branches: [Branch] = []
-
-    // bound
-    @Binding var currentBranch: Branch?
-
+    @ObservedObject var commitsModel: CommitsModel
+    
     func loadBranches() {
-        switch Repository.at(repoUrl) {
-        case let .success(repo):
-            switch repo.localBranches() {
-            case let .success(obj):
-                branches = obj
-//                for (_, branch) in obj.enumerated() {
-//                    if branch.name == "master" {
-//                        self.currentBranch = branch
-//                    }
-//                }
-            case .failure:
-                return
-            }
-        case .failure:
-            return
-        }
+        commitsModel.loadBranches()
     }
 
     var body: some View {
-        List(self.branches, id: \.self, selection: $currentBranch) { branch in
+        List(commitsModel.branches, id: \.self, selection: $commitsModel.branch) { branch in
             Text(branch.name).tag(branch)
         }
         .onAppear(perform: loadBranches)

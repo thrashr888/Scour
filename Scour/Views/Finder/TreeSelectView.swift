@@ -11,50 +11,18 @@ import SwiftGit2
 import SwiftUI
 
 struct TreeSelectView: View {
-    // input
-    var repoUrl: URL
-    var commit: Commit
-
-    // internal
-    @State var parentEntry: Tree.Entry? = nil
-    @State var entries: [Tree.Entry] = []
-
-    // bound
-    @Binding var currentEntry: Tree.Entry?
+    @ObservedObject var commitsModel: CommitsModel
 
     func loadTree() {
-        switch Repository.at(repoUrl) {
-        case let .success(repo):
-            switch repo.tree(commit.tree.oid) {
-            case let .success(obj):
-
-                for entry in obj.entries {
-                    if entry.value.attributes == Int32(GIT_FILEMODE_TREE.rawValue) {
-                        entries.append(entry.value)
-                    } else if entry.value.attributes == Int32(GIT_FILEMODE_BLOB.rawValue) {
-                        entries.append(entry.value)
-
-                        // select first file
-                        if currentEntry == nil {
-                            currentEntry = entry.value
-                        }
-                    }
-                }
-
-            case .failure:
-                return
-            }
-        case .failure:
-            return
-        }
+        commitsModel.loadTree(commitsModel.commit!)
     }
 
     var body: some View {
-        List(self.entries.sorted { $0.name < $1.name }, id: \.self, selection: $currentEntry) { entry in
-            if entry.attributes == Int32(GIT_FILEMODE_TREE.rawValue) {
-                Text("􀄧 \(entry.name)").tag(entry)
+        List(commitsModel.entries.sorted { $0.name < $1.name }, id: \.self, selection: $commitsModel.entry) { e in
+            if e.attributes == Int32(GIT_FILEMODE_TREE.rawValue) {
+                Text("􀄧 \(e.name)").tag(e)
             } else {
-                Text(entry.name).tag(entry)
+                Text(e.name).tag(e)
             }
         }
         .onAppear(perform: loadTree)
