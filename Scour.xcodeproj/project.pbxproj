@@ -33,7 +33,7 @@
 		8AD972A72496A897000A28BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A52496A897000A28BA /* Main.storyboard */; };
 		8ADBA00E24BA3AC0009A64C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */; };
 		8ADBA06324BA8A97009A64C4 /* SwiftGit2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADBA03824BA8A53009A64C4 /* SwiftGit2.framework */; };
-		8AFBAC6024CBF3D9009467C9 /* UrlsPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFBAC5F24CBF3D9009467C9 /* UrlsPlist.swift */; };
+		8AFBAC6024CBF3D9009467C9 /* UrlStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFBAC5F24CBF3D9009467C9 /* UrlStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,7 +193,7 @@
 		8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8ADBA02B24BA8A53009A64C4 /* SwiftGit2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftGit2.xcodeproj; path = SwiftGit2/SwiftGit2.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8ADBA04724BA8A6D009A64C4 /* SwiftGit2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftGit2.xcodeproj; path = SwiftGit2/SwiftGit2.xcodeproj; sourceTree = "<group>"; };
-		8AFBAC5F24CBF3D9009467C9 /* UrlsPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlsPlist.swift; sourceTree = "<group>"; };
+		8AFBAC5F24CBF3D9009467C9 /* UrlStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,7 +332,7 @@
 		8AFBAC4C24CBF3A7009467C9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8AFBAC5F24CBF3D9009467C9 /* UrlsPlist.swift */,
+				8AFBAC5F24CBF3D9009467C9 /* UrlStore.swift */,
 				8A44400D24F4C55800CA98BC /* CommitsModel.swift */,
 				8A4C3652250622BD00352033 /* EntryModel.swift */,
 			);
@@ -568,7 +568,7 @@
 				8A52BCCA24B2FCE600F3AAAD /* TreeView.swift in Sources */,
 				8A20AEF024E51A4D009FAC22 /* FinderView.swift in Sources */,
 				8A52BCB924B2B9C900F3AAAD /* BranchView.swift in Sources */,
-				8AFBAC6024CBF3D9009467C9 /* UrlsPlist.swift in Sources */,
+				8AFBAC6024CBF3D9009467C9 /* UrlStore.swift in Sources */,
 				8A427FB024F632B800F6D72C /* CommitsLineView.swift in Sources */,
 				8A24BD2724CAB8C0004D786F /* FolderSelectView.swift in Sources */,
 				8A52BCCE24B3036A00F3AAAD /* BlobView.swift in Sources */,

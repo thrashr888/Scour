@@ -6,9 +6,9 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
+import Carbon.HIToolbox.Events
 import SwiftGit2
 import SwiftUI
-import Carbon.HIToolbox.Events
 
 struct PresentableEntry: Equatable, Identifiable {
     let id = UUID()
@@ -54,22 +54,17 @@ struct KeyEventHandler: NSViewRepresentable {
 
 struct SummaryView: View {
     @ObservedObject var commitsModel: CommitsModel
-    
-    var body: some View {
 
+    var body: some View {
         HStack {
             if commitsModel.commit != nil {
-                
                 Text("\(commitsModel.repoName!)#\(commitsModel.branch!.name)@\(String(commitsModel.commit!.tree.oid.description.prefix(6)))/\(commitsModel.entry?.name ?? "")")
-                
-            } else if commitsModel.branch != nil {
-                
-                Text("\(commitsModel.repoName!)#\(commitsModel.branch!.name)")
-                
-            } else if commitsModel.repoName != nil {
-                
-                Text("\(commitsModel.repoName!)")
 
+            } else if commitsModel.branch != nil {
+                Text("\(commitsModel.repoName!)#\(commitsModel.branch!.name)")
+
+            } else if commitsModel.repoName != nil {
+                Text("\(commitsModel.repoName!)")
             }
         }
     }
@@ -93,7 +88,7 @@ struct ContentView: View {
             commitsModel.prevCommit()
         } else
         if event.keyCode == kVK_RightArrow || event.keyCode == kVK_ANSI_Period {
-           commitsModel.nextCommit()
+            commitsModel.nextCommit()
         }
     }
 
@@ -106,7 +101,7 @@ struct ContentView: View {
 
                 VStack {
                     SummaryView(commitsModel: commitsModel)
-                    
+
                     if commitsModel.commit != nil {
                         HStack {
                             CommitsLineView(entry: $entry, commitsModel: commitsModel)
@@ -122,7 +117,7 @@ struct ContentView: View {
 
                         Divider()
                     }
-                    
+
                     if commitsModel.repoUrl != nil && commitsModel.entry != nil {
                         NewEntryView(commitsModel: commitsModel, entry: commitsModel.entry!)
                             .frame(minWidth: 300, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)

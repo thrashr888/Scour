@@ -10,9 +10,15 @@ import Clibgit2
 import Foundation
 import SwiftGit2
 
+// TODO: move current values for repo branch, commit, entry to:
+// @SceneStoreage("repo") var repo: Repository?
+// @SceneStoreage("branch") var branch: Branch?
+// @SceneStoreage("commit") var commit: Commit?
+// @SceneStoreage("entry") var entry: Tree.Entry?
+
 class CommitsModel: ObservableObject {
     @Published var loading = false
-    
+
     @Published var repo: Repository?
     @Published var repoName: String?
     @Published var repoUrl: URL? {
@@ -31,7 +37,7 @@ class CommitsModel: ObservableObject {
             switch Repository.at(url) {
             case let .success(repo):
                 self.repo = repo
-                self.loadBranches()
+                loadBranches()
                 branch = nil
                 commitIterator = nil
                 commits = []
@@ -60,11 +66,11 @@ class CommitsModel: ObservableObject {
 
     @Published var commits: [Commit] = []
     @Published var commit: Commit?
-    
+
     @Published var entries: [Tree.Entry] = []
     @Published var entry: Tree.Entry?
     @Published var blob: Blob?
-    
+
     var blobCache: [OID: Blob] = [:]
 
     func prevCommit() {
@@ -76,7 +82,7 @@ class CommitsModel: ObservableObject {
 
                 print("prev \(i - 1)")
                 self.commit = commits[i - 1]
-                self.loadEntry(self.commit!, self.entry!)
+                loadEntry(self.commit!, entry!)
                 return
             }
         }
@@ -92,7 +98,7 @@ class CommitsModel: ObservableObject {
 
                 print("next \(i + 1) \(commits.count)")
                 self.commit = commits[i + 1]
-                self.loadEntry(self.commit!, self.entry!)
+                loadEntry(self.commit!, entry!)
                 return
             }
         }
@@ -100,7 +106,7 @@ class CommitsModel: ObservableObject {
 
     func loadBranches() {
         guard let repo = self.repo else { return }
-        
+
         switch repo.localBranches() {
         case let .success(obj):
             branches = obj
@@ -116,6 +122,8 @@ class CommitsModel: ObservableObject {
 
     func loadCommits() {
         guard let repo = self.repo, let branch = self.branch else { return }
+
+        // background queue for rendering the commit line?
 
         // TODO: paginate this
         loading = true
@@ -136,21 +144,21 @@ class CommitsModel: ObservableObject {
             }
         }
     }
-    
+
     var commitIterator: CommitIterator?
     var commitPageCount = 20
     var loadingCommits = false
     var hasMoreCommits = true
     func loadNextCommits() {
         guard let repo = self.repo, let branch = self.branch else { return }
-        
+
         // first load
         if commitIterator == nil {
             commitIterator = repo.commits(in: branch)
         }
-        
+
         guard let commitIterator = self.commitIterator else { return }
-        
+
         loadingCommits = true
         var loopCount = -1
         for commit in commitIterator {
@@ -176,7 +184,6 @@ class CommitsModel: ObservableObject {
         loadingCommits = false
     }
 
-    
     func loadTree(_ commit: Commit) {
         guard let repo = self.repo else { return }
 
@@ -207,7 +214,7 @@ class CommitsModel: ObservableObject {
             return
         }
     }
-    
+
     func loadEntry(_ commit: Commit, _ entry: Tree.Entry) {
         guard let repo = self.repo else { return }
 
@@ -229,20 +236,20 @@ class CommitsModel: ObservableObject {
             loading = false
             return
         }
-        
+
         return
     }
-    
+
     func loadBlob(_ entry: Tree.Entry) -> Blob? {
         guard let repo = self.repo else { return nil }
-        
+
         // cached
         if let blob = blobCache[entry.object.oid] {
             return blob
         }
-        
+
         let oid = entry.object.oid
-        
+
         loading = true
         switch repo.blob(oid) {
         case let .success(obj):

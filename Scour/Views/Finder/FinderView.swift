@@ -12,22 +12,22 @@ import SwiftUI
 
 extension AnyTransition {
     static var customTransition: AnyTransition {
-      let insertion = AnyTransition.move(edge: .trailing)
-        .combined(with: .scale(scale: 0.2, anchor: .trailing))
-        .combined(with: .opacity)
-      let removal = AnyTransition.move(edge: .leading)
-      return .asymmetric(insertion: insertion, removal: removal)
+        let insertion = AnyTransition.move(edge: .trailing)
+            .combined(with: .scale(scale: 0.2, anchor: .trailing))
+            .combined(with: .opacity)
+        let removal = AnyTransition.move(edge: .leading)
+        return .asymmetric(insertion: insertion, removal: removal)
     }
 }
 
 // just adds an HStack with some padding
 struct SelectTitleView<Content: View>: View {
     let content: () -> Content
-    
+
     init(@ViewBuilder content: @escaping () -> Content) {
         self.content = content
     }
-    
+
     var body: some View {
         HStack {
             self.content()
@@ -55,13 +55,11 @@ struct FinderView: View {
     var body: some View {
         VStack {
             if commitsModel.repoUrl == nil {
-                
                 VStack {
                     FolderSelectView(currentUrl: $commitsModel.repoUrl)
                 }.animation(.easeInOut).transition(.slide)
-                
+
             } else if commitsModel.repoUrl != nil && commitsModel.branch == nil {
-                
                 VStack {
                     SelectTitleView {
                         Button("<", action: self.clearRepo)
@@ -77,7 +75,6 @@ struct FinderView: View {
                 }.animation(.easeInOut).transition(.slide)
 
             } else if commitsModel.repoUrl != nil && commitsModel.branch != nil && commitsModel.commit == nil {
-                
                 VStack {
                     SelectTitleView {
                         Button("<", action: self.clearBranch)
@@ -91,9 +88,8 @@ struct FinderView: View {
 
                     CommitSelectView(commitsModel: commitsModel)
                 }.animation(.easeInOut).transition(.slide)
-                
+
             } else if commitsModel.repoUrl != nil && commitsModel.branch != nil && commitsModel.commit != nil {
-                
                 VStack {
                     SelectTitleView {
                         Button("<", action: self.clearCommit)

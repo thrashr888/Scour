@@ -11,13 +11,13 @@ import SwiftUI
 
 struct Tooltip: NSViewRepresentable {
     let tooltip: String
-    func makeNSView(context: NSViewRepresentableContext<Tooltip>) -> NSView {
+    func makeNSView(context _: NSViewRepresentableContext<Tooltip>) -> NSView {
         let view = NSView()
         view.toolTip = tooltip
         return view
     }
-    func updateNSView(_ nsView: NSView, context: NSViewRepresentableContext<Tooltip>) {
-    }
+
+    func updateNSView(_: NSView, context _: NSViewRepresentableContext<Tooltip>) {}
 }
 
 struct FolderSelectView: View {
@@ -35,13 +35,13 @@ struct FolderSelectView: View {
         panel.begin { response in
             if response == NSApplication.ModalResponse.OK, let fileUrl = panel.url {
                 self.urls.append(fileUrl)
-                _ = UrlsPlist.insert(url: fileUrl)
+                _ = UrlStore.insert(url: fileUrl)
             }
         }
     }
 
     func loadFolders() {
-        urls = UrlsPlist.index()
+        urls = UrlStore.index()
     }
 
     var body: some View {

@@ -14,7 +14,7 @@ struct CommitsLineView: View {
     @Binding var entry: Tree.Entry?
 
     @ObservedObject var commitsModel: CommitsModel
-    
+
     var body: some View {
         HStack {
             ForEach(commitsModel.commits, id: \.self) { commit in

@@ -8,7 +8,10 @@
 
 import Foundation
 
-struct UrlsPlist {
+// TODO: move this to App Storage
+// @AppStorage("urls") var urls: [URL] = []
+
+struct UrlStore {
     static var plistName = "scour_urls.plist"
     static func plistPath() -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(plistName)

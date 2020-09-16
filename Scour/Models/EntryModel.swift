@@ -12,9 +12,9 @@ import SwiftGit2
 
 class EntryModel: ObservableObject {
     var entry: Tree.Entry
-    
+
     var blob: Blob?
-    
+
     var mode: String
     var isUnreadable = false
     var isTree = false
@@ -22,7 +22,7 @@ class EntryModel: ObservableObject {
     var isBlobExecutable = false
     var isLink = false
     var isCommit = false
-    
+
     init(commitsModel: CommitsModel, entry: Tree.Entry) {
         switch entry.attributes {
         case Int32(GIT_FILEMODE_UNREADABLE.rawValue):
@@ -44,7 +44,7 @@ class EntryModel: ObservableObject {
         if isBlob {
             blob = commitsModel.loadBlob(entry)
         }
-        
+
         self.entry = entry
 
         mode = filemodesByFlagNew[entry.attributes]!
@@ -59,4 +59,3 @@ var filemodesByFlagNew = [
     Int32(GIT_FILEMODE_LINK.rawValue): "link",
     Int32(GIT_FILEMODE_COMMIT.rawValue): "commit",
 ]
-

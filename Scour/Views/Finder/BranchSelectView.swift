@@ -12,7 +12,7 @@ import SwiftUI
 
 struct BranchSelectView: View {
     @ObservedObject var commitsModel: CommitsModel
-    
+
     func loadBranches() {
         commitsModel.loadBranches()
     }
