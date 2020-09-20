@@ -10,23 +10,6 @@ import Carbon.HIToolbox.Events
 import SwiftGit2
 import SwiftUI
 
-struct PresentableEntry: Equatable, Identifiable {
-    let id = UUID()
-    let entry: Tree.Entry
-    let blob: Blob?
-
-    static func == (lhs: PresentableEntry, rhs: PresentableEntry) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-struct CurrentEntryPreferenceKey: PreferenceKey {
-    static var defaultValue: PresentableEntry?
-    static func reduce(value: inout PresentableEntry?, nextValue: () -> PresentableEntry?) {
-        value = nextValue()
-    }
-}
-
 struct KeyEventHandler: NSViewRepresentable {
     var callback: (NSEvent) -> Void
 

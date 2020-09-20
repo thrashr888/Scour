@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8A04B15D24F1A529008342B1 /* NewEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A04B15C24F1A529008342B1 /* NewEntryView.swift */; };
 		8A10D4D124B85E7F00EE4C89 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 8A10D4D024B85E7F00EE4C89 /* Down */; };
+		8A14095F2517D53400E50F14 /* SwiftGit2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADBA03824BA8A53009A64C4 /* SwiftGit2.framework */; };
+		8A14097B2517D72B00E50F14 /* SwiftGit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A1409792517D72B00E50F14 /* SwiftGit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8A1409902517D7C200E50F14 /* SwiftGit2.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A14098F2517D7C200E50F14 /* SwiftGit2.framework.dSYM */; };
 		8A20AEF024E51A4D009FAC22 /* FinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AEEF24E51A4D009FAC22 /* FinderView.swift */; };
 		8A20AF0424E51F51009FAC22 /* BranchSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AF0324E51F51009FAC22 /* BranchSelectView.swift */; };
 		8A20AF0624E5223F009FAC22 /* CommitSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AF0524E5223F009FAC22 /* CommitSelectView.swift */; };
@@ -32,7 +35,6 @@
 		8AD972A42496A897000A28BA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A32496A897000A28BA /* Preview Assets.xcassets */; };
 		8AD972A72496A897000A28BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A52496A897000A28BA /* Main.storyboard */; };
 		8ADBA00E24BA3AC0009A64C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */; };
-		8ADBA06324BA8A97009A64C4 /* SwiftGit2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADBA03824BA8A53009A64C4 /* SwiftGit2.framework */; };
 		8AFBAC6024CBF3D9009467C9 /* UrlStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFBAC5F24CBF3D9009467C9 /* UrlStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -152,12 +154,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		8A14098E2517D7A600E50F14 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				8A1409902517D7C200E50F14 /* SwiftGit2.framework.dSYM in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8A63F6F124ADB82C00BCB8EB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8A14097B2517D72B00E50F14 /* SwiftGit2.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +178,8 @@
 
 /* Begin PBXFileReference section */
 		8A04B15C24F1A529008342B1 /* NewEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryView.swift; sourceTree = "<group>"; };
+		8A1409792517D72B00E50F14 /* SwiftGit2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftGit2.framework; path = Carthage/Build/Mac/SwiftGit2.framework; sourceTree = "<group>"; };
+		8A14098F2517D7C200E50F14 /* SwiftGit2.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftGit2.framework.dSYM; path = Carthage/Build/Mac/SwiftGit2.framework.dSYM; sourceTree = "<group>"; };
 		8A20AEEF24E51A4D009FAC22 /* FinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderView.swift; sourceTree = "<group>"; };
 		8A20AF0324E51F51009FAC22 /* BranchSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchSelectView.swift; sourceTree = "<group>"; };
 		8A20AF0524E5223F009FAC22 /* CommitSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitSelectView.swift; sourceTree = "<group>"; };
@@ -201,7 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8ADBA06324BA8A97009A64C4 /* SwiftGit2.framework in Frameworks */,
+				8A14095F2517D53400E50F14 /* SwiftGit2.framework in Frameworks */,
 				8A10D4D124B85E7F00EE4C89 /* Down in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,6 +265,7 @@
 		8A63F6EF24ADB3F600BCB8EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A1409792517D72B00E50F14 /* SwiftGit2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -257,6 +273,7 @@
 		8AD9728D2496A895000A28BA = {
 			isa = PBXGroup;
 			children = (
+				8A14098F2517D7C200E50F14 /* SwiftGit2.framework.dSYM */,
 				8AD972982496A895000A28BA /* Scour */,
 				8AD972972496A895000A28BA /* Products */,
 				8A63F6EF24ADB3F600BCB8EB /* Frameworks */,
@@ -351,6 +368,7 @@
 				8AD972942496A895000A28BA /* Resources */,
 				8A63F6F124ADB82C00BCB8EB /* CopyFiles */,
 				8A74EF3A24B6F912001643BB /* ShellScript */,
+				8A14098E2517D7A600E50F14 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -731,6 +749,10 @@
 				DEVELOPMENT_TEAM = 5T4QSYSNP2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Scour/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -755,6 +777,10 @@
 				DEVELOPMENT_TEAM = 5T4QSYSNP2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Scour/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

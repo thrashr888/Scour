@@ -10,6 +10,23 @@ import Clibgit2
 import SwiftGit2
 import SwiftUI
 
+struct PresentableEntry: Equatable, Identifiable {
+    let id = UUID()
+    let entry: Tree.Entry
+    let blob: Blob?
+
+    static func == (lhs: PresentableEntry, rhs: PresentableEntry) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+struct CurrentEntryPreferenceKey: PreferenceKey {
+    static var defaultValue: PresentableEntry?
+    static func reduce(value: inout PresentableEntry?, nextValue: () -> PresentableEntry?) {
+        value = nextValue()
+    }
+}
+
 var filemodesByFlag = [
     Int32(GIT_FILEMODE_UNREADABLE.rawValue): "unreadable",
     Int32(GIT_FILEMODE_TREE.rawValue): "tree",
