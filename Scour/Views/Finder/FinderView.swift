@@ -6,9 +6,9 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import Clibgit2
-import SwiftGit2
 import SwiftUI
+import SwiftGit2
+import Clibgit2
 
 extension AnyTransition {
     static var customTransition: AnyTransition {
@@ -53,12 +53,11 @@ struct FinderView: View {
     }
 
     var body: some View {
-        VStack {
+        Group {
             if commitsModel.repoUrl == nil {
                 VStack {
                     FolderSelectView(currentUrl: $commitsModel.repoUrl)
-                }.animation(.easeInOut).transition(.slide)
-
+                }
             } else if commitsModel.repoUrl != nil && commitsModel.branch == nil {
                 VStack {
                     SelectTitleView {
@@ -72,7 +71,7 @@ struct FinderView: View {
                     }
 
                     BranchSelectView(commitsModel: commitsModel)
-                }.animation(.easeInOut).transition(.slide)
+                }
 
             } else if commitsModel.repoUrl != nil && commitsModel.branch != nil && commitsModel.commit == nil {
                 VStack {
@@ -87,7 +86,7 @@ struct FinderView: View {
                     }
 
                     CommitSelectView(commitsModel: commitsModel)
-                }.animation(.easeInOut).transition(.slide)
+                }
 
             } else if commitsModel.repoUrl != nil && commitsModel.branch != nil && commitsModel.commit != nil {
                 VStack {
@@ -106,8 +105,7 @@ struct FinderView: View {
                     }
 
                     TreeSelectView(commitsModel: commitsModel)
-
-                }.animation(.easeInOut).transition(.slide)
+                }
             }
         }
     }

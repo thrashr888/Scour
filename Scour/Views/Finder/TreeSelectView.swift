@@ -18,13 +18,16 @@ struct TreeSelectView: View {
     }
 
     var body: some View {
-        List(commitsModel.entries.sorted { $0.name < $1.name }, id: \.self, selection: $commitsModel.entry) { e in
-            if e.attributes == Int32(GIT_FILEMODE_TREE.rawValue) {
-                Text("􀄧 \(e.name)").tag(e)
+        // TODO: use an "outline" list here
+        //       List(entries, children: \.children) { e in
+        List(commitsModel.entries.sorted { $0.name < $1.name }, id: \.self, selection: $commitsModel.entry) { entry in
+            if entry.attributes == Int32(GIT_FILEMODE_TREE.rawValue) {
+                Text("􀄧 \(entry.name)").tag(entry)
             } else {
-                Text(e.name).tag(e)
+                Text(entry.name).tag(entry)
             }
         }
+        .listStyle(SidebarListStyle())
         .onAppear(perform: loadTree)
     }
 }

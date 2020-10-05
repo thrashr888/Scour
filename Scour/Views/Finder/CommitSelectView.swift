@@ -40,11 +40,19 @@ struct CommitSelectView: View {
     @ObservedObject var commitsModel: CommitsModel
 
     var body: some View {
+        // TODO: use LazyVStack {}
+//        ScrollView {
+//            LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
+//                ForEach(items) { item in
+//                    ItemView(item: item)
+//                }
+//            }
+//            .padding()
+//        }
         List(commitsModel.commits, id: \.self, selection: $commitsModel.commit) { commit in
             CommitSelectSingleView(commit: commit).tag(commit)
         }
-        .padding(.vertical, 1)
-        .padding(.horizontal, 3)
+        .listStyle(SidebarListStyle())
     }
 }
 

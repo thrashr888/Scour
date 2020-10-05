@@ -6,19 +6,21 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
+import SwiftUI
 import Clibgit2
 import Foundation
 import SwiftGit2
 
 // TODO: move current values for repo branch, commit, entry to:
-// @SceneStoreage("repo") var repo: Repository?
-// @SceneStoreage("branch") var branch: Branch?
-// @SceneStoreage("commit") var commit: Commit?
-// @SceneStoreage("entry") var entry: Tree.Entry?
+// @SceneStorage("repo") var repo: Repository?
+// @SceneStorage("branch") var branch: Branch?
+// @SceneStorage("commit") var commit: Commit?
+// @SceneStorage("entry") var entry: Tree.Entry?
 
 class CommitsModel: ObservableObject {
     @Published var loading = false
 
+//    @SceneStorage("repo") var repo: Repository? = nil
     @Published var repo: Repository?
     @Published var repoName: String?
     @Published var repoUrl: URL? {

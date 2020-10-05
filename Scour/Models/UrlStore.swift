@@ -8,13 +8,18 @@
 
 import Foundation
 
-// TODO: move this to App Storage
+// NOTTODO: move this to App Storage
 // @AppStorage("urls") var urls: [URL] = []
+// ^ this doesn't work with arrays, so we'd have to serialize as a string,
+//   which this data is probably too large for
 
-struct UrlStore {
+// TODO: convert to the new FileManager file read/write API
+// https://www.swiftbysundell.com/articles/working-with-files-and-folders-in-swift/
+
+class UrlStore: ObservableObject {
     static var plistName = "scour_urls.plist"
     static func plistPath() -> URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(plistName)
+        return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(plistName)
     }
 
     static func index() -> [URL] {
@@ -24,7 +29,7 @@ struct UrlStore {
         for path in paths {
             urls.append(URL(fileURLWithPath: path))
         }
-
+        print(urls[0].absoluteURL)
         return urls
     }
 
@@ -52,7 +57,8 @@ struct UrlStore {
         let url = plistPath()
         let arr = NSArray(contentsOfFile: url.path)
 //        print("_read from: \(url.path)")
-        return arr as! [String]
+        guard let out = arr else { return [] }
+        return out as! [String]
     }
 
     private static func _write(_ arr: [String] = []) -> Error? {

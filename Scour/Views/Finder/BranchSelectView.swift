@@ -21,6 +21,7 @@ struct BranchSelectView: View {
         List(commitsModel.branches, id: \.self, selection: $commitsModel.branch) { branch in
             Text(branch.name).tag(branch)
         }
+        .listStyle(SidebarListStyle())
         .onAppear(perform: loadBranches)
     }
 }

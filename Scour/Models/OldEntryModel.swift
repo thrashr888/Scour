@@ -1,5 +1,5 @@
 //
-//  EntryModel.swift
+//  OldEntryModel.swift
 //  Scour
 //
 //  Created by Paul Thrasher on 9/7/20.
@@ -10,7 +10,7 @@ import Clibgit2
 import Foundation
 import SwiftGit2
 
-class EntryModel: ObservableObject {
+class OldEntryModel: ObservableObject {
     var entry: Tree.Entry
 
     var blob: Blob?

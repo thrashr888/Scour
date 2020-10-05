@@ -57,6 +57,7 @@ struct FolderSelectView: View {
                 Text(url.lastPathComponent).tag(url).truncationMode(.tail)
                     .overlay(Tooltip(tooltip: url.relativePath))
             }
+            .listStyle(SidebarListStyle())
             .onAppear(perform: loadFolders)
         }
     }

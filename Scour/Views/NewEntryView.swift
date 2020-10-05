@@ -11,10 +11,10 @@ import SwiftGit2
 import SwiftUI
 
 struct NewEntryView: View {
-    var entryModel: EntryModel
+    var entryModel: OldEntryModel
 
     init(commitsModel: CommitsModel, entry: Tree.Entry) {
-        entryModel = EntryModel(commitsModel: commitsModel, entry: entry)
+        entryModel = OldEntryModel(commitsModel: commitsModel, entry: entry)
     }
 
     var body: some View {
