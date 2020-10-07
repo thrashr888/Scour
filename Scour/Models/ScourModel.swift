@@ -30,6 +30,7 @@ class ScourModel: ObservableObject {
     }
     
     func load() {
+        print("Scour.load")
         var rs: [RepositoryModel] = []
         let urls = UrlStore.index()
         for url in urls {
@@ -53,6 +54,7 @@ class RepositoryModel: ObservableObject, Identifiable, Hashable {
     private var repo: Repository
     
     @Published var error: Error?
+    @Published var selectedBranchID: BranchModel.ID?
     @Published var branches: [BranchModel] = []
     
     init(_ parent: ScourModel, url: URL, repo: Repository) {
@@ -63,12 +65,12 @@ class RepositoryModel: ObservableObject, Identifiable, Hashable {
     }
     
     func load() {
-        print("Repository.load")
+        print("Repository.\(id).load")
         self.branches = []
         switch self.repo.localBranches() {
         case let .success(obj):
             for (_, b) in obj.enumerated() {
-                print("Repository.load.branch =", b.name)
+                print("Repository.load.branch:", b.name)
                 let bm = BranchModel(self, repo: self.repo, branch: b)
                 self.branches.append(bm)
             }
@@ -116,11 +118,11 @@ class BranchModel: ObservableObject, Identifiable, Hashable {
     }
     
     func load(){
-        
-        DispatchQueue.main.async {
-        }
+//        DispatchQueue.main.async {
+//        }
         // TODO: background queue for rendering the commit line?
         // TODO: paginate this
+        var page = 0
         self.commits = []
         for commit in repo.commits(in: branch) {
             switch commit {
@@ -130,6 +132,10 @@ class BranchModel: ObservableObject, Identifiable, Hashable {
                 print("Branch.load.commit =", c.oid.description)
                 let cm = CommitModel(self, repo: self.repo, branch: self.branch, commit: c)
                 self.commits.append(cm)
+                page += 1
+                if page > 2 {
+                    break
+                }
             case let .failure(err):
                 self.error = err
             }
@@ -144,7 +150,7 @@ class BranchModel: ObservableObject, Identifiable, Hashable {
     }
 }
 
-class CommitModel: ObservableObject, Identifiable {
+class CommitModel: ObservableObject, Identifiable, Hashable {
     var parent: BranchModel
     var id: String { commit.oid.description }
     var name: String { commit.oid.description }
@@ -154,6 +160,12 @@ class CommitModel: ObservableObject, Identifiable {
     
     @Published var error: Error?
     @Published var entries: [EntryModel] = []
+    
+    var authorName: String { commit.author.name }
+    var committerTime: Date { commit.committer.time }
+    var oidDescription: String { commit.oid.description }
+    var message: String { commit.message }
+    var treeOidDescription: String { commit.tree.oid.description }
     
     init(_ parent: BranchModel, repo: Repository, branch: Branch, commit: Commit) {
         self.parent = parent
@@ -175,9 +187,16 @@ class CommitModel: ObservableObject, Identifiable {
             self.error = err
         }
     }
+    
+    public func hash(into hasher: inout Hasher) {
+         hasher.combine(ObjectIdentifier(self).hashValue)
+    }
+    static func == (lhs: CommitModel, rhs: CommitModel) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
-class EntryModel: ObservableObject, Identifiable {
+class EntryModel: ObservableObject, Identifiable, Hashable {
     var parent: CommitModel
     var id: String { entry.object.oid.description }
     var name: String { entry.name }
@@ -252,5 +271,12 @@ class EntryModel: ObservableObject, Identifiable {
         case let .failure(err):
             self.error = err
         }
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+         hasher.combine(ObjectIdentifier(self).hashValue)
+    }
+    static func == (lhs: EntryModel, rhs: EntryModel) -> Bool {
+        lhs.id == rhs.id
     }
 }

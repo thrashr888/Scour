@@ -6,7 +6,6 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 
 struct RepositoryMenu: View {

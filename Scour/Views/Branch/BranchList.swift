@@ -18,28 +18,24 @@ struct BranchList: View {
         List(selection: $selection) {
             ForEach(branches) { branch in
                 NavigationLink(
-                    destination: BranchView(branch: branch).environmentObject(model),
+                    destination: CommitMenu(model: branch).environmentObject(model),
                     tag: branch,
                     selection: $selection
                 ) {
                     BranchRow(branch: branch)
                 }
                 .tag(branch)
-//                .onReceive($model.selectedRepositoryID) { newValue in
-//                    guard let repository = model.selectedRepository else { return }
-//                    selection = repository
-//                }
             }
         }
     }
 }
 
-//struct RepoList_Previews: PreviewProvider {
+//struct BranchList_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ForEach([ColorScheme.light, .dark], id: \.self) { scheme in
 //            NavigationView {
-//                RepoList(smoothies: Repository.all)
-//                    .navigationTitle("Repositories")
+//                BranchList(branches: Branch.all)
+//                    .navigationTitle("Branches")
 //                    .environmentObject(ScourModel())
 //            }
 //            .preferredColorScheme(scheme)

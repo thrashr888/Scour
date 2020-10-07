@@ -25,20 +25,17 @@ struct RepositoryList: View {
                     RepositoryRow(repository: repository)
                 }
                 .tag(repository)
-//                .onReceive($model.selectedRepositoryID) { newValue in
-//                    guard let repository = model.selectedRepository else { return }
-//                    selection = repository
-//                }
             }
         }
     }
 }
 
-//struct RepoList_Previews: PreviewProvider {
+//struct RepositoryList_Previews: PreviewProvider {
+//    var repositories: [RepositoryModel]
 //    static var previews: some View {
 //        ForEach([ColorScheme.light, .dark], id: \.self) { scheme in
 //            NavigationView {
-//                RepoList(smoothies: Repository.all)
+//                RepositoryList(repositories: self.repositories)
 //                    .navigationTitle("Repositories")
 //                    .environmentObject(ScourModel())
 //            }

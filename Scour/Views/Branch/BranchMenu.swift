@@ -6,11 +6,15 @@
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 
 struct BranchMenu: View {
     var model: RepositoryModel
+    
+    init(model: RepositoryModel) {
+        self.model = model
+        model.load()
+    }
     
     var body: some View {
         BranchList(branches: model.branches)

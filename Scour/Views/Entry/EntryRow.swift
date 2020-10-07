@@ -1,32 +1,24 @@
 //
-//  BranchRow.swift
+//  EntryRow.swift
 //  Scour
 //
-//  Created by Paul Thrasher on 10/3/20.
+//  Created by Paul Thrasher on 10/6/20.
 //  Copyright © 2020 Paul Thrasher. All rights reserved.
 //
 
 import SwiftUI
 
-struct BranchRow: View {
-    var branch: BranchModel
+struct EntryRow: View {
+    var entry: EntryModel
     
     @EnvironmentObject private var model: ScourModel
     
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Text("\(branch.name)")
+                Text("\(entry.name)")
                     .font(.headline)
                     .lineLimit(1)
-                
-//                Text(repository)
-//                    .lineLimit(2)
-//                    .accessibility(label: Text("Ingredients: \(ingredients)."))
-//
-//                Text("\(smoothie.kilocalories) Calories")
-//                    .foregroundColor(.secondary)
-//                    .lineLimit(1)
             }
             
             Spacer(minLength: 0)

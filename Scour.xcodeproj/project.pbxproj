@@ -38,6 +38,14 @@
 		8A849F5F2522E227005E446F /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A849F5E2522E227005E446F /* RepositoryView.swift */; };
 		8A849F612522E4F5005E446F /* SquishableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A849F602522E4F5005E446F /* SquishableButtonStyle.swift */; };
 		8A849F632522E52A005E446F /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A849F622522E52A005E446F /* Animations.swift */; };
+		8AD50559252D5AEE007DB859 /* CommitMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD50558252D5AEE007DB859 /* CommitMenu.swift */; };
+		8AD5055B252D5B40007DB859 /* CommitList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD5055A252D5B40007DB859 /* CommitList.swift */; };
+		8AD5055D252D5BA9007DB859 /* CommitRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD5055C252D5BA9007DB859 /* CommitRow.swift */; };
+		8AD5055F252D5C22007DB859 /* CommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD5055E252D5C22007DB859 /* CommitView.swift */; };
+		8AD50562252D5FFF007DB859 /* EntryMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD50561252D5FFF007DB859 /* EntryMenu.swift */; };
+		8AD50564252D604A007DB859 /* EntryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD50563252D604A007DB859 /* EntryList.swift */; };
+		8AD50566252D60A0007DB859 /* EntryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD50565252D60A0007DB859 /* EntryRow.swift */; };
+		8AD50568252D60C9007DB859 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD50567252D60C9007DB859 /* EntryView.swift */; };
 		8AD9729C2496A895000A28BA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD9729B2496A895000A28BA /* ContentView.swift */; };
 		8AD9729F2496A895000A28BA /* Scour.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8AD9729D2496A895000A28BA /* Scour.xcdatamodeld */; };
 		8AD972A12496A897000A28BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AD972A02496A897000A28BA /* Assets.xcassets */; };
@@ -144,6 +152,14 @@
 		8A849F5E2522E227005E446F /* RepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
 		8A849F602522E4F5005E446F /* SquishableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquishableButtonStyle.swift; sourceTree = "<group>"; };
 		8A849F622522E52A005E446F /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		8AD50558252D5AEE007DB859 /* CommitMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitMenu.swift; sourceTree = "<group>"; };
+		8AD5055A252D5B40007DB859 /* CommitList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitList.swift; sourceTree = "<group>"; };
+		8AD5055C252D5BA9007DB859 /* CommitRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitRow.swift; sourceTree = "<group>"; };
+		8AD5055E252D5C22007DB859 /* CommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitView.swift; sourceTree = "<group>"; };
+		8AD50561252D5FFF007DB859 /* EntryMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryMenu.swift; sourceTree = "<group>"; };
+		8AD50563252D604A007DB859 /* EntryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryList.swift; sourceTree = "<group>"; };
+		8AD50565252D60A0007DB859 /* EntryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRow.swift; sourceTree = "<group>"; };
+		8AD50567252D60C9007DB859 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		8AD972962496A895000A28BA /* Scour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AD9729B2496A895000A28BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8AD9729E2496A895000A28BA /* Scour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Scour.xcdatamodel; sourceTree = "<group>"; };
@@ -199,6 +215,8 @@
 				8A52BCCD24B3036A00F3AAAD /* BlobView.swift */,
 				8A849F592521AE7B005E446F /* Repository */,
 				8A49BCE925294CB200422070 /* Branch */,
+				8AD5054F252D5AC4007DB859 /* Commit */,
+				8AD50560252D5FEB007DB859 /* Entry */,
 				8A427FAF24F632B800F6D72C /* CommitsLineView.swift */,
 				8A849F42251C5050005E446F /* CommitSummaryView.swift */,
 				8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */,
@@ -243,6 +261,28 @@
 				8A849F5E2522E227005E446F /* RepositoryView.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		8AD5054F252D5AC4007DB859 /* Commit */ = {
+			isa = PBXGroup;
+			children = (
+				8AD50558252D5AEE007DB859 /* CommitMenu.swift */,
+				8AD5055A252D5B40007DB859 /* CommitList.swift */,
+				8AD5055C252D5BA9007DB859 /* CommitRow.swift */,
+				8AD5055E252D5C22007DB859 /* CommitView.swift */,
+			);
+			path = Commit;
+			sourceTree = "<group>";
+		};
+		8AD50560252D5FEB007DB859 /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				8AD50561252D5FFF007DB859 /* EntryMenu.swift */,
+				8AD50563252D604A007DB859 /* EntryList.swift */,
+				8AD50565252D60A0007DB859 /* EntryRow.swift */,
+				8AD50567252D60C9007DB859 /* EntryView.swift */,
+			);
+			path = Entry;
 			sourceTree = "<group>";
 		};
 		8AD9728D2496A895000A28BA = {
@@ -485,18 +525,23 @@
 				8A49BCF925294E3400422070 /* BranchView.swift in Sources */,
 				8AFBAC6024CBF3D9009467C9 /* UrlStore.swift in Sources */,
 				8A849F43251C5050005E446F /* CommitSummaryView.swift in Sources */,
+				8AD50566252D60A0007DB859 /* EntryRow.swift in Sources */,
 				8A427FB024F632B800F6D72C /* CommitsLineView.swift in Sources */,
 				8A849F5B2521AE98005E446F /* RepositoryList.swift in Sources */,
 				8A24BD2724CAB8C0004D786F /* FolderSelectView.swift in Sources */,
 				8A52BCCE24B3036A00F3AAAD /* BlobView.swift in Sources */,
+				8AD50559252D5AEE007DB859 /* CommitMenu.swift in Sources */,
 				8A849F5D2522DFA5005E446F /* RepositoryRow.swift in Sources */,
 				8A49BCF525294D7500422070 /* BranchList.swift in Sources */,
 				8A3736B02519BAAC0032CBD8 /* ScourApp.swift in Sources */,
+				8AD50568252D60C9007DB859 /* EntryView.swift in Sources */,
 				8A49BCF325294CD400422070 /* BranchMenu.swift in Sources */,
 				8A04B15D24F1A529008342B1 /* NewEntryView.swift in Sources */,
 				8A849F5F2522E227005E446F /* RepositoryView.swift in Sources */,
 				8A49BCF725294DE100422070 /* BranchRow.swift in Sources */,
+				8AD50562252D5FFF007DB859 /* EntryMenu.swift in Sources */,
 				8AD9729C2496A895000A28BA /* ContentView.swift in Sources */,
+				8AD5055F252D5C22007DB859 /* CommitView.swift in Sources */,
 				8A20AF0624E5223F009FAC22 /* CommitSelectView.swift in Sources */,
 				8A20AF0824E527E7009FAC22 /* TreeSelectView.swift in Sources */,
 				8AD9729F2496A895000A28BA /* Scour.xcdatamodeld in Sources */,
@@ -506,9 +551,12 @@
 				8A849F612522E4F5005E446F /* SquishableButtonStyle.swift in Sources */,
 				8A20AF0424E51F51009FAC22 /* BranchSelectView.swift in Sources */,
 				8ADBA00E24BA3AC0009A64C4 /* ViewController.swift in Sources */,
+				8AD50564252D604A007DB859 /* EntryList.swift in Sources */,
 				8A849F5425200BAA005E446F /* AppSidebarNavigation.swift in Sources */,
 				8A4C3653250622BD00352033 /* OldEntryModel.swift in Sources */,
+				8AD5055D252D5BA9007DB859 /* CommitRow.swift in Sources */,
 				8A44400E24F4C55800CA98BC /* CommitsModel.swift in Sources */,
+				8AD5055B252D5B40007DB859 /* CommitList.swift in Sources */,
 				8A849F5625200C45005E446F /* VisualEffectBlur.swift in Sources */,
 				8A849F41251C4FED005E446F /* KeyEventHandler.swift in Sources */,
 			);

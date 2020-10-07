@@ -24,28 +24,10 @@ struct AppSidebarNavigation: View {
     var sidebar: some View {
         List(selection: $selection) {
             NavigationLink(destination: RepositoryMenu(model: model)) {
-                Label("Repository", systemImage: "cylinder.split.1x2")
+                Label("Repositories", systemImage: "book.closed")
             }
-            .accessibility(label: Text("Repository"))
+            .accessibility(label: Text("Repositories"))
             .tag(NavigationItem.repo)
-            
-//            NavigationLink(destination: BranchMenu()) {
-//                Label("Branch", systemImage: "heart")
-//            }
-//            .accessibility(label: Text("Branch"))
-//            .tag(NavigationItem.branch)
-//
-//            NavigationLink(destination: CommitMenu()) {
-//                Label("Commit", systemImage: "book.closed")
-//            }
-//            .accessibility(label: Text("Commit"))
-//            .tag(NavigationItem.commit)
-//
-//            NavigationLink(destination: TreeMenu()) {
-//                Label("Tree", systemImage: "book.closed")
-//            }
-//            .accessibility(label: Text("Tree"))
-//            .tag(NavigationItem.tree)
         }
         .listStyle(SidebarListStyle())
     }
@@ -57,6 +39,12 @@ struct AppSidebarNavigation: View {
             Text("Content List")
             
             Text("Select a Repository")
+            
+            Text("Select a Branch")
+            
+            Text("Select a Commit")
+            
+            Text("Select an Entry")
         }
     }
     
