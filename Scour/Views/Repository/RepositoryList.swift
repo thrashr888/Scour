@@ -10,22 +10,31 @@ import SwiftUI
 
 struct RepositoryList: View {
     var repositories: [RepositoryModel]
+    var addUrl: () -> Void
     
     @State private var selection: RepositoryModel?
     @EnvironmentObject private var model: ScourModel
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        List(selection: $selection) {
-            ForEach(repositories) { repository in
-                NavigationLink(
-                    destination: BranchMenu(model: repository).environmentObject(model),
-                    tag: repository,
-                    selection: $selection
-                ) {
-                    RepositoryRow(repository: repository)
+        Group {
+            List(selection: $selection) {
+                ForEach(repositories.sorted { $0.name < $1.name }) { repository in
+                    NavigationLink(
+                        destination: BranchMenu(model: repository).environmentObject(model),
+                        tag: repository,
+                        selection: $selection
+                    ) {
+                        RepositoryRow(repository: repository)
+                    }
+                    .tag(repository)
                 }
-                .tag(repository)
             }
+    //        .overlay(addRepositoryButton, alignment: .bottom)
+            .navigationTitle("Repositories")
+            .animation(.spring(response: 1, dampingFraction: 1), value: 1)
+            
+            AddRepositoryButton(action: addUrl)
         }
     }
 }

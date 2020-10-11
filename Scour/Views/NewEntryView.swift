@@ -26,9 +26,9 @@ struct NewEntryView: View {
             }
 
             if entryModel.blob != nil {
-                BlobView(blob: entryModel.blob!, name: entryModel.entry.name)
+//                BlobView(blob: entryModel.blob!, name: entryModel.entry.name)
             } else {
-                Text("")
+                Text("Loading...")
             }
         }
         .padding(.top)

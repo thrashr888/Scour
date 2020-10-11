@@ -10,6 +10,7 @@ import SwiftUI
 import Clibgit2
 import Foundation
 import SwiftGit2
+import Down
 
 class ScourModel: ObservableObject {
     @Published var error: Error?
@@ -18,7 +19,7 @@ class ScourModel: ObservableObject {
     
     init(){
 //        DispatchQueue.main.async {
-            self.load()
+//            self.load()
 //        }
     }
     
@@ -34,15 +35,33 @@ class ScourModel: ObservableObject {
         var rs: [RepositoryModel] = []
         let urls = UrlStore.index()
         for url in urls {
-            switch Repository.at(url) {
-            case let .success(repo):
-                rs.append(RepositoryModel(self, url: url, repo: repo))
-            case let .failure(err):
-                self.error = err
+            guard let repo = self.fromUrl(url) else {
+                self.error = NSError(domain: "Could not load \(url)", code: 1)
                 continue
             }
+            rs.append(repo)
         }
         self.repositories = rs
+    }
+    
+    func fromUrl(_ url: URL) -> RepositoryModel? {
+        switch Repository.at(url) {
+        case let .success(repo):
+            return RepositoryModel(self, url: url, repo: repo)
+        case .failure:
+            return nil
+        }
+    }
+    
+    func addRepository(_ url: URL) {
+        guard let repo = self.fromUrl(url) else {
+            self.error = NSError(domain: "Could not load \(url)", code: 1)
+            return
+        }
+        self.repositories.append(repo)
+        
+        _ = UrlStore.insert(url: url)
+        self.load()
     }
 }
 
@@ -50,6 +69,7 @@ class RepositoryModel: ObservableObject, Identifiable, Hashable {
     var parent: ScourModel
     @Published var id: UUID = UUID()
     var name: String
+    var description: String { url.relativePath }
     private var url: URL
     private var repo: Repository
     
@@ -105,6 +125,7 @@ class BranchModel: ObservableObject, Identifiable, Hashable {
     var parent: RepositoryModel
     var id: String { branch.oid.description }
     var name: String { branch.name }
+    var description: String { branch.longName }
     private var repo: Repository
     private var branch: Branch
     
@@ -196,10 +217,11 @@ class CommitModel: ObservableObject, Identifiable, Hashable {
     }
 }
 
-class EntryModel: ObservableObject, Identifiable, Hashable {
+class EntryModel: ObservableObject, Identifiable, Hashable, Comparable {
     var parent: CommitModel
     var id: String { entry.object.oid.description }
     var name: String { entry.name }
+    var description: String { entry.description }
     private var repo: Repository
     private var branch: Branch
     private var commit: Commit
@@ -207,8 +229,7 @@ class EntryModel: ObservableObject, Identifiable, Hashable {
     
     @Published var error: Error?
     @Published var entries: [EntryModel] = []
-    
-    var blob: Blob?
+    @Published var blob: BlobModel?
 
     var mode: String
     var isUnreadable = false
@@ -242,18 +263,16 @@ class EntryModel: ObservableObject, Identifiable, Hashable {
         default:
             break
         }
-
-        if isBlob {
-            self.loadBlob()
-        }
     }
     
     func load(){
+        guard isTree else { return }
+        
         self.entries = []
         switch repo.tree(entry.object.oid) {
         case let .success(obj):
             for e in obj.entries {
-                print("Commit.load.entry = ", e.value.name)
+                print("Entry.load.entry = ", e.value.name)
                 let em = EntryModel(self.parent, repo: self.repo, branch: self.branch, commit: self.commit, entry: e.value)
                 self.entries.append(em)
             }
@@ -267,7 +286,8 @@ class EntryModel: ObservableObject, Identifiable, Hashable {
 
         switch repo.blob(oid) {
         case let .success(obj):
-            blob = obj
+            print("Entry.load.blob = ", obj.hashValue)
+            self.blob = BlobModel(self, repo: self.repo, branch: self.branch, commit: self.commit, entry: self.entry, blob: obj)
         case let .failure(err):
             self.error = err
         }
@@ -277,6 +297,48 @@ class EntryModel: ObservableObject, Identifiable, Hashable {
          hasher.combine(ObjectIdentifier(self).hashValue)
     }
     static func == (lhs: EntryModel, rhs: EntryModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    static func < (lhs: EntryModel, rhs: EntryModel) -> Bool {
+        (lhs.isTree == rhs.isTree) ? lhs.name < rhs.name : lhs.isTree
+    }
+}
+
+class BlobModel: ObservableObject, Identifiable, Hashable {
+    var parent: EntryModel
+    var id: String { entry.object.oid.description }
+    var name: String { entry.name }
+    private var repo: Repository
+    private var branch: Branch
+    private var commit: Commit
+    private var entry: Tree.Entry
+    private var blob: Blob
+    
+    var content: String? { String(data: blob.data, encoding: .utf8) }
+    var isMarkdown: Bool { name.hasSuffix(".md") }
+    var md: Down? {
+        guard isMarkdown else { return nil }
+        guard let str = self.content else { return nil }
+        return Down(markdownString: str)
+    }
+    var attributedStr: NSAttributedString? {
+        guard let md = self.md else { return nil }
+        return try? md.toAttributedString()
+    }
+        
+    init(_ parent: EntryModel, repo: Repository, branch: Branch, commit: Commit, entry: Tree.Entry, blob: Blob) {
+        self.parent = parent
+        self.repo = repo
+        self.branch = branch
+        self.commit = commit
+        self.entry = entry
+        self.blob = blob
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+         hasher.combine(ObjectIdentifier(self).hashValue)
+    }
+    static func == (lhs: BlobModel, rhs: BlobModel) -> Bool {
         lhs.id == rhs.id
     }
 }

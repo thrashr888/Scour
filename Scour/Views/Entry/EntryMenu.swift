@@ -9,16 +9,14 @@
 import SwiftUI
 
 struct EntryMenu: View {
-    var model: CommitModel
-    
-    init(model: CommitModel) {
-        self.model = model
-        model.load()
-    }
+    @ObservedObject var model: CommitModel
     
     var body: some View {
         EntryList(entries: model.entries)
             .navigationTitle("Entries")
+            .onAppear {
+                model.load()
+            }
     }
     
 }

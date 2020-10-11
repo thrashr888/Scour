@@ -16,22 +16,16 @@ struct BranchRow: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Text("\(branch.name)")
+                Label(branch.name, systemImage: "arrow.triangle.branch")
                     .font(.headline)
                     .lineLimit(1)
-                
-//                Text(repository)
-//                    .lineLimit(2)
-//                    .accessibility(label: Text("Ingredients: \(ingredients)."))
-//
-//                Text("\(smoothie.kilocalories) Calories")
-//                    .foregroundColor(.secondary)
-//                    .lineLimit(1)
+                Text(branch.description)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
             }
             
             Spacer(minLength: 0)
         }
-        .font(.subheadline)
         .padding(.vertical, 10)
         .accessibilityElement(children: .combine)
     }

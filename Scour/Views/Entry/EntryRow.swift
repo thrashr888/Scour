@@ -16,7 +16,7 @@ struct EntryRow: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                Text("\(entry.name)")
+                Label(entry.name, systemImage: entry.isTree ? "folder" : "doc")
                     .font(.headline)
                     .lineLimit(1)
             }

@@ -12,34 +12,24 @@ import SwiftGit2
 import SwiftUI
 
 struct BlobView: View {
-    var blob: Blob
+    var blob: BlobModel
     var name: String
-    var content: String?
     var downView: DownView?
-    var attributedStr: NSAttributedString?
-    var isMarkdown = false
 
-    init(blob: Blob, name: String) {
+    init(blob: BlobModel, name: String) {
         self.blob = blob
         self.name = name
-
-        content = String(data: blob.data, encoding: .utf8)
-
-//        if name.hasSuffix(".md") {
-//            attributedStr = try? Down(markdownString: self.content!).toAttributedString()
-//        }
     }
 
     var body: some View {
-//        Text(blob.data.description)
         VStack(alignment: .leading) {
             ScrollView([.vertical]) {
-                if content != nil {
-                    if attributedStr != nil {
-                        TextView(text: self.attributedStr!)
+                if blob.content != nil {
+                    if blob.attributedStr != nil {
+                        TextView(text: blob.attributedStr!)
                     } else {
-//                        Text(content!)
-                        TextField("", text: .constant(content!))
+                        TextField("", text: .constant(blob.content!))
+                            .padding(2)
                     }
                 } else {
                     Text("Cannot read file: \(name)")

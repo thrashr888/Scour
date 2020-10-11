@@ -16,7 +16,7 @@ struct BranchList: View {
     
     var body: some View {
         List(selection: $selection) {
-            ForEach(branches) { branch in
+            ForEach(branches.sorted { $0.name < $1.name }) { branch in
                 NavigationLink(
                     destination: CommitMenu(model: branch).environmentObject(model),
                     tag: branch,

@@ -16,15 +16,26 @@ struct EntryList: View {
     
     var body: some View {
         List(selection: $selection) {
-            ForEach(entries) { entry in
-                NavigationLink(
-                    destination: EntryView(entry: entry).environmentObject(model),
-                    tag: entry,
-                    selection: $selection
-                ) {
-                    EntryRow(entry: entry)
+            ForEach(entries.sorted()) { entry in
+                if entry.isTree {
+                    NavigationLink(
+                        destination: EntryMenu(model: entry.parent).environmentObject(model),
+                        tag: entry,
+                        selection: $selection
+                    ) {
+                        EntryRow(entry: entry)
+                    }
+                    .tag(entry)
+                } else {
+                    NavigationLink(
+                        destination: EntryView(entry: entry).environmentObject(model),
+                        tag: entry,
+                        selection: $selection
+                    ) {
+                        EntryRow(entry: entry)
+                    }
+                    .tag(entry)
                 }
-                .tag(entry)
             }
         }
     }

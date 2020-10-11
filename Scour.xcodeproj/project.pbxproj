@@ -12,6 +12,7 @@
 		8A14095F2517D53400E50F14 /* SwiftGit2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADBA03824BA8A53009A64C4 /* SwiftGit2.framework */; };
 		8A14097B2517D72B00E50F14 /* SwiftGit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A1409792517D72B00E50F14 /* SwiftGit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8A1409902517D7C200E50F14 /* SwiftGit2.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A14098F2517D7C200E50F14 /* SwiftGit2.framework.dSYM */; };
+		8A1C21CE25315801005F4C8E /* AddRepositoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C21CD25315801005F4C8E /* AddRepositoryButton.swift */; };
 		8A20AEF024E51A4D009FAC22 /* FinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AEEF24E51A4D009FAC22 /* FinderView.swift */; };
 		8A20AF0424E51F51009FAC22 /* BranchSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AF0324E51F51009FAC22 /* BranchSelectView.swift */; };
 		8A20AF0624E5223F009FAC22 /* CommitSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A20AF0524E5223F009FAC22 /* CommitSelectView.swift */; };
@@ -126,6 +127,7 @@
 		8A04B15C24F1A529008342B1 /* NewEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryView.swift; sourceTree = "<group>"; };
 		8A1409792517D72B00E50F14 /* SwiftGit2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftGit2.framework; path = Carthage/Build/Mac/SwiftGit2.framework; sourceTree = "<group>"; };
 		8A14098F2517D7C200E50F14 /* SwiftGit2.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftGit2.framework.dSYM; path = Carthage/Build/Mac/SwiftGit2.framework.dSYM; sourceTree = "<group>"; };
+		8A1C21CD25315801005F4C8E /* AddRepositoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRepositoryButton.swift; sourceTree = "<group>"; };
 		8A20AEEF24E51A4D009FAC22 /* FinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderView.swift; sourceTree = "<group>"; };
 		8A20AF0324E51F51009FAC22 /* BranchSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchSelectView.swift; sourceTree = "<group>"; };
 		8A20AF0524E5223F009FAC22 /* CommitSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitSelectView.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				8A849F5A2521AE98005E446F /* RepositoryList.swift */,
 				8A849F5C2522DFA5005E446F /* RepositoryRow.swift */,
 				8A849F5E2522E227005E446F /* RepositoryView.swift */,
+				8A1C21CD25315801005F4C8E /* AddRepositoryButton.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				8A20AF0624E5223F009FAC22 /* CommitSelectView.swift in Sources */,
 				8A20AF0824E527E7009FAC22 /* TreeSelectView.swift in Sources */,
 				8AD9729F2496A895000A28BA /* Scour.xcdatamodeld in Sources */,
+				8A1C21CE25315801005F4C8E /* AddRepositoryButton.swift in Sources */,
 				8A52BCC424B2F4EB00F3AAAD /* ErrorView.swift in Sources */,
 				8A849F582521AE56005E446F /* RepositoryMenu.swift in Sources */,
 				8A849F632522E52A005E446F /* Animations.swift in Sources */,

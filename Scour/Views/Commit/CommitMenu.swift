@@ -9,16 +9,14 @@
 import SwiftUI
 
 struct CommitMenu: View {
-    var model: BranchModel
-    
-    init(model: BranchModel) {
-        self.model = model
-        model.load()
-    }
+    @ObservedObject var model: BranchModel
     
     var body: some View {
         CommitList(commits: model.commits)
             .navigationTitle("Commits")
+            .onAppear {
+                model.load()
+            }
     }
     
 }

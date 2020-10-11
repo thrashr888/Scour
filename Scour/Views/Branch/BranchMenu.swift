@@ -9,22 +9,14 @@
 import SwiftUI
 
 struct BranchMenu: View {
-    var model: RepositoryModel
-    
-    init(model: RepositoryModel) {
-        self.model = model
-        model.load()
-    }
+    @ObservedObject var model: RepositoryModel
     
     var body: some View {
         BranchList(branches: model.branches)
             .navigationTitle("Branches")
+            .onAppear {
+                model.load()
+            }
     }
     
 }
-
-//struct BranchMenu_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BranchMenu(model: ScourModel())
-//    }
-//}

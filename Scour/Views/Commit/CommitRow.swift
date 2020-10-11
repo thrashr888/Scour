@@ -22,35 +22,30 @@ struct CommitRow: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                
-                HStack(alignment: .lastTextBaseline) {
-                    Text(commit.authorName)
-                        .foregroundColor(Color.orange).truncationMode(.tail)
-                    Text("\(commit.committerTime, formatter: Self.taskDateFormat)").multilineTextAlignment(.trailing)
-                    Spacer()
-                    Text(commit.oidDescription).frame(width: 60.0, height: 13.0).truncationMode(.tail)
-                }
                 HStack {
-                    Text(commit.message).frame(height: 13.0).truncationMode(.tail)
+                    Text(commit.authorName)
+                        .foregroundColor(.secondary)
+                        .accessibility(label: Text("\(commit.authorName)"))
+                    Spacer()
+                    Text("\(commit.committerTime, formatter: Self.taskDateFormat)")
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.trailing)
                 }
                 
-                Text("\(String(commit.treeOidDescription.prefix(6)))")
-                Text("\(commit.name)")
-                    .font(.headline)
-                    .lineLimit(1)
-                
-//                Text(repository)
-//                    .lineLimit(2)
-//                    .accessibility(label: Text("Ingredients: \(ingredients)."))
-//
-//                Text("\(smoothie.kilocalories) Calories")
-//                    .foregroundColor(.secondary)
-//                    .lineLimit(1)
+                HStack {
+                    Label(commit.treeOidDescription.prefix(6), systemImage: "circlebadge.fill")
+                        .font(.body)
+//                    Text("\(String(commit.treeOidDescription.prefix(6)))")
+//                        .font(.body)
+//                        .foregroundColor(.secondary)
+                    Text(commit.message)
+                        .font(.body)
+                        .lineLimit(1)
+                }
             }
             
             Spacer(minLength: 0)
         }
-        .font(.subheadline)
         .padding(.vertical, 10)
         .accessibilityElement(children: .combine)
     }
