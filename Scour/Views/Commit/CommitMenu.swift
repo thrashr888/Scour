@@ -12,10 +12,15 @@ struct CommitMenu: View {
     @ObservedObject var model: BranchModel
     
     var body: some View {
-        CommitList(commits: model.commits)
+        if model.error != nil {
+            ErrorView(error: model.error!)
+        }
+        CommitList(branch: model, commits: model.commits)
             .navigationTitle("Commits")
             .onAppear {
-                model.load()
+                DispatchQueue.main.async {
+                    model.load()
+                }
             }
     }
     

@@ -25,22 +25,22 @@ struct CommitRow: View {
                 HStack {
                     Text(commit.authorName)
                         .foregroundColor(.secondary)
-                        .accessibility(label: Text("\(commit.authorName)"))
+                        .lineLimit(1)
                     Spacer()
-                    Text("\(commit.committerTime, formatter: Self.taskDateFormat)")
+                    Text("\(commit.createdAt, formatter: Self.taskDateFormat)")
                         .foregroundColor(.secondary)
-                        .multilineTextAlignment(.trailing)
                 }
                 
                 HStack {
-                    Label(commit.treeOidDescription.prefix(6), systemImage: "circlebadge.fill")
+                    Text(commit.name)
+                        .foregroundColor(.secondary)
                         .font(.body)
-//                    Text("\(String(commit.treeOidDescription.prefix(6)))")
-//                        .font(.body)
-//                        .foregroundColor(.secondary)
-                    Text(commit.message)
+                    Text(commit.description)
                         .font(.body)
                         .lineLimit(1)
+                    Spacer()
+                    Label("", systemImage: "circlebadge.fill")
+                        .multilineTextAlignment(.trailing)
                 }
             }
             

@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct RepositoryList: View {
+    var scour: ScourModel
     var repositories: [RepositoryModel]
     var addUrl: () -> Void
     
@@ -16,39 +17,26 @@ struct RepositoryList: View {
     @EnvironmentObject private var model: ScourModel
     @Environment(\.colorScheme) private var colorScheme
     
+    var showLoading: some View {
+        ProgressView().padding()
+    }
+    
     var body: some View {
-        Group {
-            List(selection: $selection) {
-                ForEach(repositories.sorted { $0.name < $1.name }) { repository in
-                    NavigationLink(
-                        destination: BranchMenu(model: repository).environmentObject(model),
-                        tag: repository,
-                        selection: $selection
-                    ) {
-                        RepositoryRow(repository: repository)
-                    }
-                    .tag(repository)
+        List(selection: $selection) {
+            ForEach(repositories.sorted { $0.name < $1.name }) { repository in
+                NavigationLink(
+                    destination: BranchMenu(model: repository).environmentObject(model),
+                    tag: repository,
+                    selection: $selection
+                ) {
+                    RepositoryRow(repository: repository)
                 }
+                .tag(repository)
             }
-    //        .overlay(addRepositoryButton, alignment: .bottom)
-            .navigationTitle("Repositories")
-            .animation(.spring(response: 1, dampingFraction: 1), value: 1)
-            
-            AddRepositoryButton(action: addUrl)
         }
+        .navigationTitle("Repositories")
+//        .animation(.spring(response: 1, dampingFraction: 1), value: 1)
+//        .listStyle(SidebarListStyle())
+        .overlay(scour.loading ? showLoading : nil, alignment: .bottom)
     }
 }
-
-//struct RepositoryList_Previews: PreviewProvider {
-//    var repositories: [RepositoryModel]
-//    static var previews: some View {
-//        ForEach([ColorScheme.light, .dark], id: \.self) { scheme in
-//            NavigationView {
-//                RepositoryList(repositories: self.repositories)
-//                    .navigationTitle("Repositories")
-//                    .environmentObject(ScourModel())
-//            }
-//            .preferredColorScheme(scheme)
-//        }
-//    }
-//}

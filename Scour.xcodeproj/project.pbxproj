@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8A04B15D24F1A529008342B1 /* NewEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A04B15C24F1A529008342B1 /* NewEntryView.swift */; };
+		8A0B485E253B7186002E3B52 /* EntryIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0B485D253B7186002E3B52 /* EntryIterator.swift */; };
 		8A10D4D124B85E7F00EE4C89 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 8A10D4D024B85E7F00EE4C89 /* Down */; };
 		8A14095F2517D53400E50F14 /* SwiftGit2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ADBA03824BA8A53009A64C4 /* SwiftGit2.framework */; };
 		8A14097B2517D72B00E50F14 /* SwiftGit2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8A1409792517D72B00E50F14 /* SwiftGit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -39,6 +40,8 @@
 		8A849F5F2522E227005E446F /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A849F5E2522E227005E446F /* RepositoryView.swift */; };
 		8A849F612522E4F5005E446F /* SquishableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A849F602522E4F5005E446F /* SquishableButtonStyle.swift */; };
 		8A849F632522E52A005E446F /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A849F622522E52A005E446F /* Animations.swift */; };
+		8A9F9CBD254BE9B100786853 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9F9CBC254BE9B100786853 /* AppView.swift */; };
+		8AC9C229253D225800C7ED83 /* CommitLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC9C228253D225800C7ED83 /* CommitLine.swift */; };
 		8AD50559252D5AEE007DB859 /* CommitMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD50558252D5AEE007DB859 /* CommitMenu.swift */; };
 		8AD5055B252D5B40007DB859 /* CommitList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD5055A252D5B40007DB859 /* CommitList.swift */; };
 		8AD5055D252D5BA9007DB859 /* CommitRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD5055C252D5BA9007DB859 /* CommitRow.swift */; };
@@ -125,6 +128,7 @@
 
 /* Begin PBXFileReference section */
 		8A04B15C24F1A529008342B1 /* NewEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryView.swift; sourceTree = "<group>"; };
+		8A0B485D253B7186002E3B52 /* EntryIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryIterator.swift; sourceTree = "<group>"; };
 		8A1409792517D72B00E50F14 /* SwiftGit2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftGit2.framework; path = Carthage/Build/Mac/SwiftGit2.framework; sourceTree = "<group>"; };
 		8A14098F2517D7C200E50F14 /* SwiftGit2.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftGit2.framework.dSYM; path = Carthage/Build/Mac/SwiftGit2.framework.dSYM; sourceTree = "<group>"; };
 		8A1C21CD25315801005F4C8E /* AddRepositoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRepositoryButton.swift; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 		8A849F5E2522E227005E446F /* RepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
 		8A849F602522E4F5005E446F /* SquishableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquishableButtonStyle.swift; sourceTree = "<group>"; };
 		8A849F622522E52A005E446F /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		8A9F9CBC254BE9B100786853 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		8AC9C228253D225800C7ED83 /* CommitLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitLine.swift; sourceTree = "<group>"; };
 		8AD50558252D5AEE007DB859 /* CommitMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitMenu.swift; sourceTree = "<group>"; };
 		8AD5055A252D5B40007DB859 /* CommitList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitList.swift; sourceTree = "<group>"; };
 		8AD5055C252D5BA9007DB859 /* CommitRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitRow.swift; sourceTree = "<group>"; };
@@ -200,6 +206,14 @@
 			path = Finder;
 			sourceTree = "<group>";
 		};
+		8A1C21DB2533D8BB005F4C8E /* Blob */ = {
+			isa = PBXGroup;
+			children = (
+				8A52BCCD24B3036A00F3AAAD /* BlobView.swift */,
+			);
+			path = Blob;
+			sourceTree = "<group>";
+		};
 		8A49BCE925294CB200422070 /* Branch */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,11 +228,11 @@
 		8A52BCB324B2ADE500F3AAAD /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A52BCCD24B3036A00F3AAAD /* BlobView.swift */,
 				8A849F592521AE7B005E446F /* Repository */,
 				8A49BCE925294CB200422070 /* Branch */,
 				8AD5054F252D5AC4007DB859 /* Commit */,
 				8AD50560252D5FEB007DB859 /* Entry */,
+				8A1C21DB2533D8BB005F4C8E /* Blob */,
 				8A427FAF24F632B800F6D72C /* CommitsLineView.swift */,
 				8A849F42251C5050005E446F /* CommitSummaryView.swift */,
 				8A52BCC324B2F4EB00F3AAAD /* ErrorView.swift */,
@@ -241,6 +255,7 @@
 			children = (
 				8A849F40251C4FED005E446F /* KeyEventHandler.swift */,
 				8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */,
+				8A0B485D253B7186002E3B52 /* EntryIterator.swift */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -249,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				8AD9729B2496A895000A28BA /* ContentView.swift */,
+				8A9F9CBC254BE9B100786853 /* AppView.swift */,
 				8A849F5325200BAA005E446F /* AppSidebarNavigation.swift */,
 			);
 			path = Navigation;
@@ -273,6 +289,7 @@
 				8AD5055A252D5B40007DB859 /* CommitList.swift */,
 				8AD5055C252D5BA9007DB859 /* CommitRow.swift */,
 				8AD5055E252D5C22007DB859 /* CommitView.swift */,
+				8AC9C228253D225800C7ED83 /* CommitLine.swift */,
 			);
 			path = Commit;
 			sourceTree = "<group>";
@@ -543,6 +560,7 @@
 				8A849F5F2522E227005E446F /* RepositoryView.swift in Sources */,
 				8A49BCF725294DE100422070 /* BranchRow.swift in Sources */,
 				8AD50562252D5FFF007DB859 /* EntryMenu.swift in Sources */,
+				8A0B485E253B7186002E3B52 /* EntryIterator.swift in Sources */,
 				8AD9729C2496A895000A28BA /* ContentView.swift in Sources */,
 				8AD5055F252D5C22007DB859 /* CommitView.swift in Sources */,
 				8A20AF0624E5223F009FAC22 /* CommitSelectView.swift in Sources */,
@@ -558,6 +576,8 @@
 				8AD50564252D604A007DB859 /* EntryList.swift in Sources */,
 				8A849F5425200BAA005E446F /* AppSidebarNavigation.swift in Sources */,
 				8A4C3653250622BD00352033 /* OldEntryModel.swift in Sources */,
+				8A9F9CBD254BE9B100786853 /* AppView.swift in Sources */,
+				8AC9C229253D225800C7ED83 /* CommitLine.swift in Sources */,
 				8AD5055D252D5BA9007DB859 /* CommitRow.swift in Sources */,
 				8A44400E24F4C55800CA98BC /* CommitsModel.swift in Sources */,
 				8AD5055B252D5B40007DB859 /* CommitList.swift in Sources */,

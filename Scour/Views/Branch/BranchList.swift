@@ -9,10 +9,15 @@
 import SwiftUI
 
 struct BranchList: View {
+    var repository: RepositoryModel
     var branches: [BranchModel]
     
     @State private var selection: BranchModel?
     @EnvironmentObject private var model: ScourModel
+    
+    var showLoading: some View {
+        ProgressView().padding()
+    }
     
     var body: some View {
         List(selection: $selection) {
@@ -27,18 +32,9 @@ struct BranchList: View {
                 .tag(branch)
             }
         }
+        .navigationTitle("Branches")
+//        .animation(.spring(response: 1, dampingFraction: 1), value: 1)
+//        .listStyle(SidebarListStyle())
+        .overlay(repository.loading ? showLoading : nil, alignment: .bottom)
     }
 }
-
-//struct BranchList_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ForEach([ColorScheme.light, .dark], id: \.self) { scheme in
-//            NavigationView {
-//                BranchList(branches: Branch.all)
-//                    .navigationTitle("Branches")
-//                    .environmentObject(ScourModel())
-//            }
-//            .preferredColorScheme(scheme)
-//        }
-//    }
-//}

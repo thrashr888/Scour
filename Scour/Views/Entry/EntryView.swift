@@ -11,20 +11,35 @@ import SwiftUI
 struct EntryView: View {
     @ObservedObject var entry: EntryModel
     
-    @EnvironmentObject private var model: ScourModel    
+    @EnvironmentObject private var model: ScourModel
+    
+    @State var loading = false
     
     var body: some View {
-        Group {            
-            if entry.blob != nil {
-                BlobView(blob: entry.blob!, name: entry.name)
+        Group {
+            CommitLine(entry: entry, commits: entry.commits)
+                .onAppear {
+                    entry.loadCommits()
+                }
+            
+            Label(entry.fullPath, systemImage: entry.isTree ? "folder" : "doc")
+                .font(.headline)
+                .padding(.top, 5)
+        
+            if entry.blob != nil && !loading {
+                BlobView(model: entry.blob!, name: entry.name)
             } else {
                 ProgressView()
                     .onAppear {
-                        entry.loadBlob()
+                        loading = true
+                        DispatchQueue.main.async {
+                            entry.loadBlob()
+                            loading = false
+                        }
                     }
             }
         }
-        .background(Rectangle().fill(BackgroundStyle()).edgesIgnoringSafeArea(.all))
+//        .background(Rectangle().fill(BackgroundStyle()).edgesIgnoringSafeArea(.all))
         .navigationTitle(entry.name)
     }
 }

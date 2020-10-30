@@ -12,10 +12,22 @@ struct BranchMenu: View {
     @ObservedObject var model: RepositoryModel
     
     var body: some View {
-        BranchList(branches: model.branches)
+        if model.error != nil {
+            ErrorView(error: model.error!)
+        }
+        BranchList(repository: model, branches: model.branches)
             .navigationTitle("Branches")
             .onAppear {
-                model.load()
+                DispatchQueue.main.async {
+                    model.load()
+                }
+            }
+            .toolbar {
+                Button(action: {
+                    model.fetch()
+                }) {
+                    Label("Fetch", systemImage: "arrow.clockwise")
+                }
             }
     }
     

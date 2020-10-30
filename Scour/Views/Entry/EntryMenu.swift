@@ -12,10 +12,15 @@ struct EntryMenu: View {
     @ObservedObject var model: CommitModel
     
     var body: some View {
-        EntryList(entries: model.entries)
+        if model.error != nil {
+            ErrorView(error: model.error!)
+        }
+        EntryList(commit: model, entries: model.entries)
             .navigationTitle("Entries")
             .onAppear {
-                model.load()
+                DispatchQueue.main.async {
+                    model.load()
+                }
             }
     }
     

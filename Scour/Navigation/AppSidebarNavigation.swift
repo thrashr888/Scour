@@ -19,7 +19,6 @@ struct AppSidebarNavigation: View {
 
     @EnvironmentObject private var model: ScourModel
     @State private var selection: Set<NavigationItem> = [.repo]
-    @State private var presentingRewards = false
     
     var sidebar: some View {
         List(selection: $selection) {

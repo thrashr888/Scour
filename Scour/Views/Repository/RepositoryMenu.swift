@@ -24,10 +24,20 @@ struct RepositoryMenu: View {
     }
 
     var body: some View {
-        RepositoryList(repositories: model.repositories, addUrl: addUrl)
+        if model.error != nil {
+            ErrorView(error: model.error!)
+        }
+        RepositoryList(scour: model, repositories: model.repositories, addUrl: addUrl)
             .navigationTitle("Repositories")
             .onAppear {
-                model.load()
+                DispatchQueue.main.async {
+                    model.load()
+                }
+            }
+            .toolbar {
+                Button(action: addUrl) {
+                    Label("Add Repository", systemImage: "folder.badge.plus")
+                }
             }
     }
     

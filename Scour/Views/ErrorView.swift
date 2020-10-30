@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ErrorView: View {
     var error: Error
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Error")

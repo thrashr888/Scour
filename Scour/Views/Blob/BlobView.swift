@@ -12,27 +12,36 @@ import SwiftGit2
 import SwiftUI
 
 struct BlobView: View {
-    var blob: BlobModel
+    var model: BlobModel
     var name: String
     var downView: DownView?
-
-    init(blob: BlobModel, name: String) {
-        self.blob = blob
-        self.name = name
-    }
+    
+    @State var renderMarkdown = false
 
     var body: some View {
         VStack(alignment: .leading) {
+            if model.error != nil {
+                ErrorView(error: model.error!)
+            }
             ScrollView([.vertical]) {
-                if blob.content != nil {
-                    if blob.attributedStr != nil {
-                        TextView(text: blob.attributedStr!)
+                if model.content != nil {
+                    if model.attributedStr != nil && renderMarkdown {
+                        TextView(text: model.attributedStr!)
                     } else {
-                        TextField("", text: .constant(blob.content!))
+                        TextEditor(text: .constant(model.content!))
                             .padding(2)
+//                        TextField("", text: .constant(model.content!))
+//                            .padding(2)
                     }
                 } else {
                     Text("Cannot read file: \(name)")
+                }
+            }
+            .toolbar {
+                if model.isMarkdown{
+                    Form {
+                        Toggle("Render Markdown", isOn: $renderMarkdown)
+                    }
                 }
             }
         }
