@@ -253,9 +253,12 @@
 		8A849F37251C4FD6005E446F /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				8A849F40251C4FED005E446F /* KeyEventHandler.swift */,
-				8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */,
+				8A849F622522E52A005E446F /* Animations.swift */,
 				8A0B485D253B7186002E3B52 /* EntryIterator.swift */,
+				8A849F40251C4FED005E446F /* KeyEventHandler.swift */,
+				8A849F602522E4F5005E446F /* SquishableButtonStyle.swift */,
+				8ADBA00D24BA3AC0009A64C4 /* ViewController.swift */,
+				8A849F5525200C45005E446F /* VisualEffectBlur.swift */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -328,9 +331,6 @@
 			isa = PBXGroup;
 			children = (
 				8A3736AF2519BAAC0032CBD8 /* ScourApp.swift */,
-				8A849F5525200C45005E446F /* VisualEffectBlur.swift */,
-				8A849F602522E4F5005E446F /* SquishableButtonStyle.swift */,
-				8A849F622522E52A005E446F /* Animations.swift */,
 				8A849F5225200B13005E446F /* Navigation */,
 				8A849F37251C4FD6005E446F /* lib */,
 				8AFBAC4C24CBF3A7009467C9 /* Models */,
@@ -789,7 +789,7 @@
 			repositoryURL = "https://github.com/iwasrobbed/Down.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
+				minimumVersion = 0.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

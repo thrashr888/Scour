@@ -101,7 +101,7 @@ struct RepositoryView: View {
             
             ForEach(repository.branches, id: \.id) { branch in
                 Text("container.zstack.branch")
-                let presenting = selectedBranchID == branch.id
+//                let presenting = selectedBranchID == branch.id
                 Text("\(branch.id) BranchCard(branch: branch)")
 //                BranchCard(branch: branch.ingredient, presenting: presenting, closeAction: deselectBranch)
 //                    .matchedGeometryEffect(id: branch.id, in: namespace, isSource: presenting)
@@ -130,8 +130,8 @@ struct RepositoryView: View {
                 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 130), spacing: 16, alignment: .top)], alignment: .center, spacing: 16) {
                     ForEach(repository.branches, id: \.id) { branch in
-                        let ingredient = branch
-                        let presenting = selectedBranchID == branch.id
+//                        let ingredient = branch
+//                        let presenting = selectedBranchID == branch.id
                         Button(action: { select(branch: branch) }) {
                             Text("\(branch.id) BranchGraphic(branch: branch)")
 //                            BranchGraphic(branch: branch, style: presenting ? .cardFront : .thumbnail)

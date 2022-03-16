@@ -41,15 +41,17 @@ class ScourModel: ObservableObject {
         }
     }
     
-    func addRepository(_ url: URL) {
+    func addRepository(_ url: URL) -> RepositoryModel? {
         guard let repo = self.fromUrl(url) else {
             self.error = NSError(domain: "Could not load \(url)", code: 1)
-            return
+            return nil
         }
         self.repositories.append(repo)
         
         _ = UrlStore.insert(url: url)
         self.load()
+        
+        return repo
     }
 }
 
